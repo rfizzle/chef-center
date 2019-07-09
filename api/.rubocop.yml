@@ -1,0 +1,15 @@
+Metrics/LineLength:
+  Max: 120
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 20
+
+Metrics/MethodLength:
+  Max: 25
+
+AllCops:
+  Exclude:
+    - bin/*
