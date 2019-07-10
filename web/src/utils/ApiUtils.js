@@ -1,0 +1,93 @@
+import axios from 'axios';
+import settings from '../settings';
+
+export const apiPost = (url, data = {}, config = { withCredentials: true }) =>
+  axios.post(`${settings.url}${url}`, data, config)
+    .then(response => {
+      if (response.status !== 200) {
+        return Promise.reject(errorHandler(response));
+      } else {
+        return Promise.resolve(response.data.data);
+      }
+    })
+    .catch(error => Promise.reject(errorHandler(error)));
+
+export const apiGet = (url, config = { withCredentials: true }) =>
+  axios.get(`${settings.url}${url}`, config)
+    .then(response => {
+      if (response.status !== 200) {
+        return Promise.reject(errorHandler(response));
+      } else {
+        return Promise.resolve(response.data.data);
+      }
+    })
+    .catch(error => Promise.reject(errorHandler(error)));
+
+export const apiPut = (url, data, config = { withCredentials: true }) =>
+  axios.put(`${settings.url}${url}`, data, config)
+    .then(response => {
+      if (response.status !== 200) {
+        return Promise.reject(errorHandler(response));
+      } else {
+        return Promise.resolve(response.data.data);
+      }
+    })
+    .catch(error => Promise.reject(errorHandler(error)));
+
+export const apiDelete = (url, config = { withCredentials: true }) =>
+  axios.delete(`${settings.url}${url}`, config)
+    .then(response => {
+      if (response.status !== 200) {
+        return Promise.reject(errorHandler(response));
+      } else {
+        return Promise.resolve(response.data.data);
+      }
+    })
+    .catch(error => Promise.reject(errorHandler(error)));
+
+const errorHandler = (error) => {
+  if (error && error.response) {
+    if (error.response.data) {
+      if (error.response.data.status === 'fail') {
+        return {
+          status: error.response.status,
+          statusText: error.response.statusText,
+          message: error.response.data.data.message,
+          data: error.response.data.data,
+        };
+      } else if (error.response.data.status === 'error') {
+        if (error.response.data.message && error.response.data.message.errors) {
+          return {
+            status: error.response.status,
+            statusText: error.response.statusText,
+            message: error.response.data.message.errors[0],
+          };
+        } else {
+          return {
+            status: error.response.status,
+            statusText: error.response.statusText,
+            message: error.response.data.message,
+          };
+        }
+      } else {
+        return {
+          status: error.response.status,
+          statusText: error.response.statusText,
+          message: (error.response.message || error.response.statusText),
+        };
+      }
+    }
+  } else if (error && error.request) {
+    return {
+      status: -1,
+      statusText: 'Client Side Error',
+      message: error.message,
+    };
+  } else {
+    return {
+      status: -1,
+      statusText: 'An error occurred',
+      message: 'An error occurred',
+    };
+  }
+};
