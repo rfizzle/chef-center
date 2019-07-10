@@ -37,10 +37,12 @@ class Operation
       ctx[:transaction] = transaction
       ctx[:contract] = contract
       ctx[:decorator] = decorator
-      ctx[:original_input] = input
+      ctx[:dangerous_original_input] = input[:params]
+      ctx[:session] = input[:session]
+      ctx[:request] = input[:request]
       Success(input)
     else
-      Failure(op_contract.errors.to_h)
+      Failure(ErrorService.bad_request_fail(op_contract.errors.to_h))
     end
   end
 
@@ -51,10 +53,10 @@ class Operation
   def validate(input)
     result = ctx[:contract].new.call(input[:params])
     if result.errors.count.positive?
-      Failure(result.errors.to_h)
+      Failure(ErrorService.bad_request_fail(result.errors.to_h))
     else
-      ctx[:sanitized_input] = result.to_h
-      Success(ctx[:sanitized_input])
+      ctx[:params] = result.to_h
+      Success(input.merge(params: result.to_h))
     end
   end
 
@@ -63,16 +65,15 @@ class Operation
   # @param sanitized_input [Hash] the input that passed the validation (bad/unvalidated data thrown out)
   # @return [Success,Failure] the result of the transaction
   def run(sanitized_input)
-    input = ctx[:original_input].merge(params: sanitized_input)
     t = ctx[:transaction].new
     t.ctx = ctx
-    t.call(input) do |result|
+    t.call(sanitized_input) do |result|
       result.success do |success|
         return Success(success)
       end
 
       result.failure do |error|
-        return Failure(error)
+        return Failure(error: error)
       end
     end
   end

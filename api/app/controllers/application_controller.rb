@@ -22,6 +22,11 @@ class ApplicationController < ActionController::API
     false
   end
 
+  def check_authentication
+    result = Auth::CheckAuthentication.run(_default_run_options)
+    result.success? ? @current_user = result.success[:user] : not_authorized
+  end
+
   private
 
   # Default parameters to pass to operation
@@ -32,8 +37,18 @@ class ApplicationController < ActionController::API
       params: params.to_unsafe_h.deep_symbolize_keys,
       session: session,
       request: request,
-      response: response
+      response: response,
+      current_user: @current_user
     }
+  end
+
+  # Return not authorized response
+  #
+  # @return [String] JSON response
+  def not_authorized
+    session[:jwt] = nil
+    session.destroy
+    error_response('Not authorized', :unauthorized)
   end
 
   # Set JSON success status hash

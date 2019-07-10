@@ -3,6 +3,6 @@
 # Controller for /status
 class StatusController < ApplicationController
   def index
-    run GetStatus
+    run Status::Index
   end
 end

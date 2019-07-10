@@ -1,11 +1,27 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :status, only: %i[index]
+
   # resource :nodes
   # resource :roles
   # resource :environments
   # resource :cookbooks
   # resource :data
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  defaults format: 'json' do
+    resources :status, only: %i[index]
+
+    # Authentication
+    resources :authentication, only: %i[] do
+      collection do
+        post :challenge
+        post :authenticate
+        post 'login-data', to: :login_data
+        get :check
+        post :logout
+        post :register
+        post :refresh
+      end
+    end
+  end
 end

@@ -13,7 +13,10 @@ export const authLogin = (email, password, nextPath, otp = '') => {
       .then(() => dispatch(push(nextPath)))
       .then(() => dispatch(loginComplete()))
       .catch(error => {
-        if (error.status === 400 && error.data.mfa && error.data.mfa === 'MFA required') {
+        if (error.status === 400 && error.data.mfa) {
+          if (error.data.message) {
+            dispatch(enqueueSnackbar({ message: error.message, options: { variant: 'error' } }))
+          }
           return dispatch(mfaRequired());
         } else {
           dispatch(loginFailure());
