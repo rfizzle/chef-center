@@ -24,7 +24,7 @@ class ApplicationController < ActionController::API
 
   def check_authentication
     result = Auth::CheckAuthentication.run(_default_run_options)
-    result.success? ? @current_user = result.success[:user] : not_authorized
+    result.success? ? @current_user = result.success[:model] : not_authorized
   end
 
   private

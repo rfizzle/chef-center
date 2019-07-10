@@ -14,7 +14,7 @@ class Auth::Register < Transaction
   # @return [Success,Failure] fail if user exists.
   def check_existing(input)
     user = User.find_by(email: input[:params][:email])
-    user ? Failure(ErrorService.bad_request_fail(message: "User exists")) : Success(input)
+    user ? Failure(ErrorService.bad_request_fail(message: 'User exists')) : Success(input)
   end
 
   # Check if MFA was enabled for the user and if so, validate the request parameters to ensure
@@ -24,7 +24,7 @@ class Auth::Register < Transaction
   # @return [Success,Failure] fail if otp_timestamp is invalid.
   def check_mfa(input)
     ctx[:otp_timestamp] = OtpService.check_setup_parameters(input[:params])
-    ctx[:otp_timestamp] ? Success(input) : Failure(ErrorService.bad_request_fail(message: "Invalid MFA"))
+    ctx[:otp_timestamp] ? Success(input) : Failure(ErrorService.bad_request_fail(message: 'Invalid MFA'))
   end
 
   # Setup the user in the database
@@ -34,6 +34,6 @@ class Auth::Register < Transaction
   def setup_user(input)
     # Create user
     ctx[:model] = User::CreationService.create(input[:params], otp_timestamp: ctx[:otp_timestamp])
-    ctx[:model] ? Success(ctx[:model]) : Failure(ErrorService.bad_request_fail(message: "Error setting up user"))
+    ctx[:model] ? Success(ctx[:model]) : Failure(ErrorService.bad_request_fail(message: 'Error setting up user'))
   end
 end

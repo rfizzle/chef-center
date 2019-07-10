@@ -12,4 +12,5 @@ Metrics/MethodLength:
 
 AllCops:
   Exclude:
-    - bin/*
+    - bin/**
+    - db/**

@@ -3,6 +3,7 @@
 # High level class for transactions. Used for type validation.
 class Transaction
   CONTRACT = EmptyContract
+  DECORATOR = false
 
   include Dry::Transaction
 
@@ -16,7 +17,7 @@ class Transaction
     Operation.new.call(
       transaction: self,
       contract: self::CONTRACT,
-      decorator: nil,
+      decorator: self::DECORATOR,
       input: input
     )
   end

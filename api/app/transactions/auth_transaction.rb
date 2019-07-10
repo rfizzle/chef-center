@@ -16,14 +16,14 @@ class AuthTransaction < Transaction
   # @return [User] the user model
   def get_user_from_email_param(input)
     ctx[:user] = User.find_by(email: input[:params][:email])
-    ctx[:user] ? Success(input) : Failure(ErrorService.bad_request_fail(message: "Invalid user"))
+    ctx[:user] ? Success(input) : Failure(ErrorService.bad_request_fail(message: 'Invalid user'))
   end
 
   # Start the verifier
   #
   def start_sirp_verifier(input)
     ctx[:verifier] = SIRP::Verifier.new(Rails.configuration.sirp_prime)
-    ctx[:verifier] ? Success(input) : Failure(ErrorService.bad_request_fail(message: "Invalid user"))
+    ctx[:verifier] ? Success(input) : Failure(ErrorService.bad_request_fail(message: 'Invalid user'))
   end
 
   private
@@ -45,6 +45,7 @@ class AuthTransaction < Transaction
   # @return [String, NilClass] the JWT or nil
   def get_jwt_from_header(request)
     return nil if request.nil?
+
     header = request.headers['Authorization']
     return nil if header.nil?
 

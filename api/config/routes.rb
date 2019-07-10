@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-
   # resource :nodes
   # resource :roles
   # resource :environments
@@ -21,6 +20,14 @@ Rails.application.routes.draw do
         post :logout
         post :register
         post :refresh
+      end
+    end
+
+    resources :users
+
+    resources :profile, only: %i[index] do
+      collection do
+        post :update
       end
     end
   end

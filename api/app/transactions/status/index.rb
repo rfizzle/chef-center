@@ -4,7 +4,7 @@
 class Status::Index < Transaction
   step :status
 
-  def status(_)
+  def status(_input)
     ctx[:raw_response] = { status: 'ok' }
     Success(true)
   end

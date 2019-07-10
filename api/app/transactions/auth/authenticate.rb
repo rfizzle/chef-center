@@ -16,12 +16,12 @@ class Auth::Authenticate < AuthTransaction
   def get_proof(input)
     proof = ctx[:user].proof
     ctx[:proof] = JSON.parse(Base64.decode64(proof))
-    ctx[:proof] ? Success(input) : Failure(ErrorService.bad_request_fail(message: "Invalid proof"))
+    ctx[:proof] ? Success(input) : Failure(ErrorService.bad_request_fail(message: 'Invalid proof'))
   end
 
   def verify_session(input)
     ctx[:h_amk] = ctx[:verifier].verify_session(ctx[:proof], input[:params][:M])
-    ctx[:h_amk] ? Success(input) : Failure(ErrorService.bad_request_fail(message: "Invalid h_amk"))
+    ctx[:h_amk] ? Success(input) : Failure(ErrorService.bad_request_fail(message: 'Invalid h_amk'))
   end
 
   def check_mfa(input)
@@ -36,12 +36,12 @@ class Auth::Authenticate < AuthTransaction
 
   def verify_otp(input)
     result = OtpService.verify(ctx[:user], input[:params])
-    result ? Success(input) : Failure(ErrorService.bad_request_fail(message: "Invalid OTP", mfa: true))
+    result ? Success(input) : Failure(ErrorService.bad_request_fail(message: 'Invalid OTP', mfa: true))
   end
 
   def setup_user_session(input)
     ctx[:session][:jwt] = AccessToken.generate_for_user(id: ctx[:user].id.to_s, email: ctx[:user].email, scope: {})
-    ctx[:session][:jwt] ? Success(input) : Failure(ErrorService.bad_request_fail(message: "Error setting up JWT"))
+    ctx[:session][:jwt] ? Success(input) : Failure(ErrorService.bad_request_fail(message: 'Error setting up JWT'))
   end
 
   def authenticate_response(input)

@@ -17,7 +17,7 @@ class Auth::Challenge < AuthTransaction
       ctx[:user].salt,
       input[:params][:A]
     )
-    ctx[:challenge] ? Success(input) : Failure(ErrorService.bad_request_fail(message: "Failed Challenge"))
+    ctx[:challenge] ? Success(input) : Failure(ErrorService.bad_request_fail(message: 'Failed Challenge'))
   end
 
   def store_proof(input)

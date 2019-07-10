@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Create user table
 class CreateUsers < ActiveRecord::Migration[6.0]
   def change
     create_table :users do |t|
@@ -6,7 +9,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :salt
       t.string :kdf_salt
       t.string :verifier
-      t.string :mfa_enabled
+      t.boolean :mfa_enabled
       t.string :otp_secret
       t.integer :last_otp_at
       t.string :pbkdf2_salt
