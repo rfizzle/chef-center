@@ -10,6 +10,10 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import PeopleIcon from '@material-ui/icons/People';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import ComputerIcon from '@material-ui/icons/Computer';
+import CookBookIcon from '@material-ui/icons/LibraryBooks';
+import RoleIcon from '@material-ui/icons/Security';
+import ClientIcon from '@material-ui/icons/Backup';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -19,6 +23,10 @@ const links = [
     id: 'Main',
     children: [
       { id: 'Dashboard', link: '/dashboard', icon: <DashboardIcon/> },
+      { id: 'Nodes', link: '/nodes', icon: <ComputerIcon/> },
+      { id: 'Cookbooks', link: '/cookbooks', icon: <CookBookIcon/> },
+      { id: 'Roles', link: '/roles', icon: <RoleIcon/> },
+      { id: 'Clients', link: '/clients', icon: <ClientIcon/> },
     ],
   },
   {

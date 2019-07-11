@@ -115,9 +115,21 @@ class ApplicationController < ActionController::API
     return (result[:raw_response] || {}) unless result[:decorator]
 
     if result[:model].respond_to? :each
-      result[:model].map { |x| result[:decorator].new(x) }
+      result[:model].map { |x| result[:decorator].new(handle_hash(x)) }
     else
-      result[:decorator].new(result[:model])
+      result[:decorator].new(handle_hash(result[:model]))
+    end
+  end
+
+  # Convert hashes to OpenStruct so the decorators can read them
+  #
+  # @param obj [Object] the object to check
+  # @return [OpenStruct, Object] returns an OpenStruct if object is hash
+  def handle_hash(obj)
+    if obj.is_a? Hash
+      JSON.parse(obj.to_json, object_class: OpenStruct)
+    else
+      obj
     end
   end
 end

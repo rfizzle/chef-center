@@ -8,6 +8,7 @@ import RegisterPage from '../containers/RegisterPage';
 import RootPage from '../containers/RootPage';
 import UsersPage from '../containers/UsersPage';
 import ProfilePage from '../containers/ProfilePage';
+import NodesPage from "../containers/NodesPage";
 
 const AppRouter = () => (
   <HashRouter>
@@ -16,6 +17,7 @@ const AppRouter = () => (
       <PrivateRoute path="/dashboard" component={DashboardPage} exact={true}/>
       <PrivateRoute path="/users" component={UsersPage} exact={true}/>
       <PrivateRoute path="/profile" component={ProfilePage} exact={true}/>
+      <PrivateRoute path="/nodes" component={NodesPage} exact={true}/>
       <Route path="/login" component={LoginPage} exact={true}/>
       <Route path="/register" component={RegisterPage} exact={true}/>
       <Route component={NotFoundPage}/>

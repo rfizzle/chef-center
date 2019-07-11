@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # resource :nodes
+  # resource :node
   # resource :roles
   # resource :environments
   # resource :cookbooks
@@ -30,5 +30,7 @@ Rails.application.routes.draw do
         post :update
       end
     end
+
+    resources :nodes
   end
 end

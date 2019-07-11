@@ -19,6 +19,7 @@ import Notifier from './components/notifier';
 import { SnackbarProvider } from 'notistack';
 import axios from 'axios';
 import CloseSnackbar from "./components/notifier/CloseSnackbar";
+import nodesReducer from "./store/nodes/reducers";
 
 const reducer = (history) => {
   return {
@@ -26,6 +27,7 @@ const reducer = (history) => {
     authentication: authenticationReducer,
     router: connectRouter(history),
     users: usersReducer,
+    nodes: nodesReducer,
     profile: profileReducer,
   };
 };

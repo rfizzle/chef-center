@@ -2,8 +2,8 @@
 
 # Initialize the chef client
 
-# Rails.application.config.chef_client = Chef::ServerAPI.new(
-#   ENV['CHEF_SERVER_URL'],
-#   raw_key: File.read(ENV['CHEF_CLIENT_KEY_PATH']),
-#   client_name: ENV['CHEF_CLIENT_NAME']
-# )
+Rails.application.config.chef_client = Chef::ServerAPI.new(
+  ENV['CHEF_SERVER_URL'],
+  raw_key: File.read(ENV['CHEF_CLIENT_KEY_PATH']),
+  client_name: ENV['CHEF_CLIENT_NAME']
+)
