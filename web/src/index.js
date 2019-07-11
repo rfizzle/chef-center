@@ -20,12 +20,14 @@ import { SnackbarProvider } from 'notistack';
 import axios from 'axios';
 import CloseSnackbar from "./components/notifier/CloseSnackbar";
 import nodesReducer from "./store/nodes/reducers";
+import dashboardReducer from "./store/dashboard/reducers";
 
 const reducer = (history) => {
   return {
     application: applicationReducer,
     authentication: authenticationReducer,
     router: connectRouter(history),
+    dashboard: dashboardReducer,
     users: usersReducer,
     nodes: nodesReducer,
     profile: profileReducer,

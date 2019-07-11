@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# User list decorator
+# Node index decorator
 class Node::IndexDecorator < ApplicationDecorator
   property :id
   property :hostname

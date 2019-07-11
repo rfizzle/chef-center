@@ -1,85 +1,102 @@
-import React from "react";
-import classnames from "classnames";
-import { Paper, withStyles } from "@material-ui/core";
-import Typography from "@material-ui/core/es/Typography/Typography";
+/* eslint-disable no-script-url */
 
-const Widget = (
-  {
-    classes,
-    children,
-    title,
-    noBodyPadding,
-    bodyClass,
-    className,
-    disableWidgetMenu,
-    ...props
-  }
-) => (
-  <div className={classes.widgetWrapper}>
-    <Paper className={classes.paper} classes={{ root: classes.widgetRoot }}>
-      <div className={classes.widgetHeader}>
-        {props.header ? (
-          props.header
-        ) : (
-          <React.Fragment>
-            <Typography color="textSecondary">
-              {title}
-            </Typography>
-          </React.Fragment>
-        )}
-      </div>
-      <div
-        className={classnames(classes.widgetBody, {
-          [classes.noPadding]: noBodyPadding,
-          [bodyClass]: bodyClass
-        })}
-      >
-        {children}
-      </div>
-    </Paper>
-  </div>
-);
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import CardContent from "@material-ui/core/CardContent";
+import Card from "@material-ui/core/Card";
+import Button from "@material-ui/core/Button";
+import CardActions from "@material-ui/core/CardActions";
 
 const styles = theme => ({
-  widgetWrapper: {
-    display: "flex",
-    minHeight: "100%"
+  widgetContext: {
+    flex: 1,
   },
-  widgetHeader: {
-    padding: theme.spacing(3),
-    paddingBottom: theme.spacing(1),
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center"
+  fixedHeight: {
+    height: 240,
   },
-  widgetRoot: {
-    boxShadow: theme.customShadows.widget
+  title: {
+    flexGrow: 1,
   },
   widgetBody: {
-    paddingBottom: theme.spacing(3),
-    paddingRight: theme.spacing(3),
-    paddingLeft: theme.spacing(3)
+    padding: theme.spacing(2)
   },
-  noPadding: {
-    padding: 0
+  action: {
+    textDecoration: 'none',
   },
-  paper: {
-    display: "flex",
-    flexDirection: "column",
-    flexGrow: 1,
-    overflow: "hidden"
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  moreButton: {
-    margin: -theme.spacing(1),
-    padding: 0,
-    width: 40,
-    height: 40,
-    color: theme.palette.text.hint,
-    "&:hover": {
-      backgroundColor: theme.palette.primary.main,
-      color: "rgba(255, 255, 255, 0.35)"
-    }
+  flexColumn: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexBasis: '50%',
+    flex: 1,
+  },
+  flexCenter: {
+    alignItems: 'center',
+    align: 'center',
+    alignSelf: 'center'
   }
 });
+
+class Widget extends Component {
+  render() {
+    const { classes, title, mainValue, subText, actionUrl, actionText, icon } = this.props;
+    return (
+      <React.Fragment>
+        <Card className={classes.card}>
+          <div className={classes.flexRow}>
+            <div className={classes.flexColumn}>
+              <CardContent>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  {title}
+                </Typography>
+                <Typography variant="h2" component="h2">
+                  {mainValue}
+                </Typography>
+                <Typography className={classes.pos} color="textSecondary">
+                  {subText}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button
+                  className={classNames(classes.button, classes.action)}
+                  component={Link}
+                  to={actionUrl}
+                  color="inherit"
+                  size="small"
+                >
+                  {actionText}
+                </Button>
+              </CardActions>
+            </div>
+            <div className={classNames(classes.flexColumn, classes.flexCenter)}>
+              {icon}
+            </div>
+          </div>
+        </Card>
+      </React.Fragment>
+    )
+  }
+}
+
+Widget.propTypes = {
+  classes: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  mainValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  subText: PropTypes.string.isRequired,
+  actionUrl: PropTypes.string.isRequired,
+  actionText: PropTypes.string.isRequired,
+  icon: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles, { withTheme: true })(Widget)

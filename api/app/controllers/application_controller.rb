@@ -114,7 +114,7 @@ class ApplicationController < ActionController::API
   def decorator_map(result)
     return (result[:raw_response] || {}) unless result[:decorator]
 
-    if result[:model].respond_to? :each
+    if result[:model].respond_to?(:to_ary)
       result[:model].map { |x| result[:decorator].new(handle_hash(x)) }
     else
       result[:decorator].new(handle_hash(result[:model]))
