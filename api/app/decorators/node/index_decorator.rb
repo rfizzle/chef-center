@@ -8,4 +8,5 @@ class Node::IndexDecorator < ApplicationDecorator
   property :uptime
   property :last_checkin
   property :platform
+  property :roles
 end

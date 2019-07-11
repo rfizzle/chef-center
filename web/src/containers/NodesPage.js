@@ -22,6 +22,9 @@ import Typography from '@material-ui/core/Typography';
 import { bindActionCreators } from 'redux';
 import NodeUtils from "../utils/NodeUtils";
 import moment from 'moment';
+import Chip from "@material-ui/core/Chip";
+import classNames from 'classnames';
+import { push } from 'connected-react-router';
 
 const styles = theme => ({
   contentPaper: {
@@ -59,10 +62,16 @@ const styles = theme => ({
     paddingRight: theme.spacing(4),
     paddingBottom: theme.spacing(1),
     paddingLeft: theme.spacing(4),
+  },
+  marginChip: {
+    marginRight: theme.spacing(1),
+  },
+  errorText: {
+    color: theme.palette.error.dark,
   }
 });
 
-const nodesTable = (nodes, classes) => {
+const nodesTable = (nodes, classes, onRowClick) => {
   if (nodes && nodes.length > 0) {
     return (
       <Table className={classes.table}>
@@ -73,18 +82,23 @@ const nodesTable = (nodes, classes) => {
             <TableCell>FQDN</TableCell>
             <TableCell>Uptime</TableCell>
             <TableCell>Last Checkin</TableCell>
+            <TableCell>Roles</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {nodes.map(node => {
             return (
-              <TableRow key={node.id}>
-                <TableCell>{node.hostname}</TableCell>
-                <TableCell>{node.platform}</TableCell>
-                <TableCell>{node.fqdn}</TableCell>
-                <TableCell>{moment.duration(node.uptime).humanize()}</TableCell>
-                <TableCell>{moment(node.last_checkin, 'X').fromNow()}</TableCell>
+              <TableRow
+                key={node.id}
+              >
+                <TableCell onClick={() => onRowClick(node.id)}>{node.hostname}</TableCell>
+                <TableCell onClick={() => onRowClick(node.id)}>{node.platform}</TableCell>
+                <TableCell onClick={() => onRowClick(node.id)}>{node.fqdn}</TableCell>
+                <TableCell onClick={() => onRowClick(node.id)}>{moment.duration(node.uptime).humanize()}</TableCell>
+                <TableCell onClick={() => onRowClick(node.id)}>{moment(node.last_checkin, 'X').fromNow()}</TableCell>
+                <TableCell
+                  onClick={() => onRowClick(node.id)}>{buildRoleChips(node.roles, classes, node.id)}</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             );
@@ -103,12 +117,35 @@ const nodesTable = (nodes, classes) => {
   }
 };
 
+const buildRoleChips = (arr, classes, key) => {
+  if (arr.length === 0) {
+    return (<div className={classes.errorText}>No Roles</div>)
+  }
+  return (
+    <div>
+      {arr.map(ele => {
+        return (
+          <Chip
+            variant="outlined"
+            size="small"
+            label={ele}
+            key={key + "_role_" + ele}
+            className={classNames(classes.chip, classes.marginChip)}
+            color="primary"
+          />);
+      })}
+    </div>
+  );
+};
+
 class NodesPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       search: ''
     };
+
+    this.handleRowClick = this.handleRowClick.bind(this);
   }
 
   componentDidMount() {
@@ -131,6 +168,10 @@ class NodesPage extends Component {
         nodes: this.props.nodes,
       });
     }
+  };
+
+  handleRowClick = (id) => {
+    this.props.push("/nodes/" + id);
   };
 
   handleRefresh = (event) => {
@@ -179,14 +220,14 @@ class NodesPage extends Component {
               </Grid>
             </Toolbar>
           </AppBar>
-          {nodesTable(filteredNodes, classes)}
+          {nodesTable(filteredNodes, classes, this.handleRowClick)}
         </Paper>
       </MainLayoutComponent>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ loadNodes, refreshNodes }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ loadNodes, refreshNodes, push }, dispatch);
 
 const mapStateToProps = (state) => ({
   nodes: state.nodes.nodes,
@@ -197,6 +238,7 @@ NodesPage.propTypes = {
   nodes: PropTypes.array.isRequired,
   loadNodes: PropTypes.func.isRequired,
   refreshNodes: PropTypes.func.isRequired,
+  push: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NodesPage));
