@@ -5,8 +5,8 @@
 import scrypt from 'scrypt-async';
 import jsrp from 'jsrp';
 import randomBytes from 'randombytes';
-import { apiGet, apiPost } from '../utils/ApiUtils';
 import AppCrypto from './AppCrypto';
+import AuthenticationApi from "../api/AuthenticationApi";
 
 // Default scrypt parameters
 const SCRYPT_PARAMETERS = {
@@ -37,7 +37,7 @@ class Authenticator {
    * @returns {Promise<Object>}
    */
   static checkAuth() {
-    return apiGet('/authentication/check');
+    return AuthenticationApi.checkAuth();
   }
 
   /**
@@ -46,7 +46,7 @@ class Authenticator {
    */
   static logout() {
     AppCrypto.clearDataStore();
-    return apiPost('/authentication/logout', {});
+    return AuthenticationApi.logout();
   }
 
   /**
@@ -92,8 +92,7 @@ class Authenticator {
     // Encrypt private key
     const encryptedPrivateKey = await AppCrypto.aesEncrypt(pbkdf2Key, aesIv, rsaPrivateKeyString);
 
-    return await apiPost(
-      '/authentication/register',
+    return await AuthenticationApi.register(
       {
         name,
         email,
@@ -119,7 +118,7 @@ class Authenticator {
    */
   async login(email, password, otp) {
     // Post login data and get response with kdf salt (for scrypt)
-    const loginDataResponse = await apiPost('/authentication/login-data', { email });
+    const loginDataResponse = await AuthenticationApi.loginData({ email });
 
     // Get kdf salt from login data response
     const kdfSalt = loginDataResponse.kdf_salt;
@@ -134,7 +133,7 @@ class Authenticator {
     const A = this._srpChallenge();
 
     // Post challenge and get server public key (B) and SHA256 salt for SRP hashing
-    const challengeResponse = await apiPost('/authentication/challenge', { email, A });
+    const challengeResponse = await AuthenticationApi.challenge({ email, A });
 
     const { B, salt } = challengeResponse;
 
@@ -142,7 +141,7 @@ class Authenticator {
     const M = this._srpAuthenticate(salt, B);
 
     // Post authenticate and get the shared secret (H_AMK) and user's name
-    const authResponse = await apiPost('/authentication/authenticate', { email, M, ...(otp && { otp }) });
+    const authResponse = await AuthenticationApi.authenticate({ email, M, ...(otp && { otp }) });
 
     // Get shared secret (H_AMK) and user's name from auth response
     const { H_AMK, name, pbkdf2_salt, aes_iv, encrypted_private_key } = authResponse;

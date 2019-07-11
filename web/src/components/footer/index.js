@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import GithubIcon from "../icons/Github";
 
 const styles = _theme => ({
   root: {
@@ -23,6 +24,10 @@ const styles = _theme => ({
   rightContent: {
     flex: 1,
     textAlign: 'right',
+  },
+  link: {
+    textDecoration: 'none',
+    color: '#000000',
   }
 });
 
@@ -33,13 +38,20 @@ class FooterComponent extends Component {
     return (
       <div className={classes.root}>
         <div className={classes.leftContent}>
-          <Typography variant="body1">Footer Text</Typography>
+          <Typography variant="body1">Created by Rfizzle</Typography>
         </div>
         <div className={classes.centerContent}>
-          <Typography variant="body1">Footer Text</Typography>
+          <Typography variant="body1">Chef-Center (a Goiardi UI)</Typography>
         </div>
         <div className={classes.rightContent}>
-          <Typography variant="body1">Footer Text</Typography>
+          <Typography variant="body1">
+            <a className={classes.link}
+               target="_blank"
+               rel="noopener noreferrer"
+               href="https://github.com/rfizzle/chef-center">
+              <GithubIcon/>
+            </a>
+          </Typography>
         </div>
       </div>
     );

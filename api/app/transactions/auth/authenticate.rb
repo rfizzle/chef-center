@@ -3,6 +3,7 @@
 # User authenticate operation (server step 2)
 class Auth::Authenticate < AuthTransaction
   CONTRACT = Auth::AuthenticateContract
+  DECORATOR = Auth::AuthenticateDecorator
 
   step :get_user_from_email_param
   step :start_sirp_verifier
@@ -45,7 +46,7 @@ class Auth::Authenticate < AuthTransaction
   end
 
   def authenticate_response(input)
-    ctx[:raw_response] = {
+    ctx[:model] = {
       H_AMK: ctx[:h_amk],
       name: ctx[:user].name,
       aes_iv: ctx[:user].aes_iv,

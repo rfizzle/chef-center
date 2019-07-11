@@ -1,44 +1,60 @@
 import axios from 'axios';
 import settings from '../settings';
 
-export const apiPost = (url, data = {}, config = { withCredentials: true }) =>
+export const apiPost = (url, data = {}, failSilent = false, config = { withCredentials: true }) =>
   axios.post(`${settings.url}${url}`, data, config)
     .then(response => {
       if (response.status !== 200) {
-        return Promise.reject(errorHandler(response));
+        if (failSilent) {
+          return Promise.resolve(errorHandler(response));
+        } else {
+          return Promise.reject(errorHandler(response));
+        }
       } else {
         return Promise.resolve(response.data.data);
       }
     })
     .catch(error => Promise.reject(errorHandler(error)));
 
-export const apiGet = (url, config = { withCredentials: true }) =>
+export const apiGet = (url, failSilent = false, config = { withCredentials: true }) =>
   axios.get(`${settings.url}${url}`, config)
     .then(response => {
       if (response.status !== 200) {
-        return Promise.reject(errorHandler(response));
+        if (failSilent) {
+          return Promise.resolve(errorHandler(response));
+        } else {
+          return Promise.reject(errorHandler(response));
+        }
       } else {
         return Promise.resolve(response.data.data);
       }
     })
     .catch(error => Promise.reject(errorHandler(error)));
 
-export const apiPut = (url, data, config = { withCredentials: true }) =>
+export const apiPut = (url, data, failSilent = false, config = { withCredentials: true }) =>
   axios.put(`${settings.url}${url}`, data, config)
     .then(response => {
       if (response.status !== 200) {
-        return Promise.reject(errorHandler(response));
+        if (failSilent) {
+          return Promise.resolve(errorHandler(response));
+        } else {
+          return Promise.reject(errorHandler(response));
+        }
       } else {
         return Promise.resolve(response.data.data);
       }
     })
     .catch(error => Promise.reject(errorHandler(error)));
 
-export const apiDelete = (url, config = { withCredentials: true }) =>
+export const apiDelete = (url, failSilent = false, config = { withCredentials: true }) =>
   axios.delete(`${settings.url}${url}`, config)
     .then(response => {
       if (response.status !== 200) {
-        return Promise.reject(errorHandler(response));
+        if (failSilent) {
+          return Promise.resolve(errorHandler(response));
+        } else {
+          return Promise.reject(errorHandler(response));
+        }
       } else {
         return Promise.resolve(response.data.data);
       }

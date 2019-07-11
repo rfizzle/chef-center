@@ -3,6 +3,7 @@
 # User authenticate operation (server step 1)
 class Auth::Challenge < AuthTransaction
   CONTRACT = Auth::ChallengeContract
+  DECORATOR = Auth::ChallengeDecorator
 
   step :get_user_from_email_param
   step :start_sirp_verifier
@@ -27,7 +28,7 @@ class Auth::Challenge < AuthTransaction
   end
 
   def challenge_response(input)
-    ctx[:raw_response] = ctx[:challenge][:challenge]
+    ctx[:model] = ctx[:challenge][:challenge]
     Success(input)
   end
 end

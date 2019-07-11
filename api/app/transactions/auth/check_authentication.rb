@@ -2,6 +2,8 @@
 
 # User authenticate check transaction
 class Auth::CheckAuthentication < AuthTransaction
+  DECORATOR = CheckAuthenticationDecorator
+
   step :get_jwt
   step :get_user_from_jwt
   step :return_user
@@ -17,7 +19,7 @@ class Auth::CheckAuthentication < AuthTransaction
   end
 
   def return_user(user)
-    ctx[:raw_response] = { email: user.email, name: user.name }
+    ctx[:model] = { email: user.email, name: user.name }
     Success(user)
   end
 end
