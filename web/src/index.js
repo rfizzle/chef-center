@@ -21,6 +21,7 @@ import axios from 'axios';
 import CloseSnackbar from "./components/notifier/CloseSnackbar";
 import nodesReducer from "./store/nodes/reducers";
 import dashboardReducer from "./store/dashboard/reducers";
+import cookbooksReducer from "./store/cookbooks/reducers";
 
 const reducer = (history) => {
   return {
@@ -30,6 +31,7 @@ const reducer = (history) => {
     dashboard: dashboardReducer,
     users: usersReducer,
     nodes: nodesReducer,
+    cookbooks: cookbooksReducer,
     profile: profileReducer,
   };
 };
