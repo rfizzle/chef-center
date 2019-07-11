@@ -10,6 +10,7 @@ import UsersPage from '../containers/UsersPage';
 import ProfilePage from '../containers/ProfilePage';
 import NodesPage from "../containers/NodesPage";
 import CookbooksPage from "../containers/CookbooksPage";
+import RolesPage from "../containers/RolesPage";
 
 const AppRouter = () => (
   <HashRouter>
@@ -20,6 +21,7 @@ const AppRouter = () => (
       <PrivateRoute path="/profile" component={ProfilePage} exact={true}/>
       <PrivateRoute path="/nodes" component={NodesPage} exact={true}/>
       <PrivateRoute path="/cookbooks" component={CookbooksPage} exact={true}/>
+      <PrivateRoute path="/roles" component={RolesPage} exact={true}/>
       <Route path="/login" component={LoginPage} exact={true}/>
       <Route path="/register" component={RegisterPage} exact={true}/>
       <Route component={NotFoundPage}/>

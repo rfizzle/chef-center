@@ -2,7 +2,7 @@
 
 # User authenticate check transaction
 class Auth::CheckAuthentication < AuthTransaction
-  DECORATOR = CheckAuthenticationDecorator
+  DECORATOR = Auth::CheckAuthenticationDecorator
 
   step :get_jwt
   step :get_user_from_jwt

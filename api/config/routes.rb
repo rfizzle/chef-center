@@ -34,5 +34,6 @@ Rails.application.routes.draw do
 
     resources :nodes
     resources :cookbooks
+    resources :roles
   end
 end

@@ -22,6 +22,7 @@ import CloseSnackbar from "./components/notifier/CloseSnackbar";
 import nodesReducer from "./store/nodes/reducers";
 import dashboardReducer from "./store/dashboard/reducers";
 import cookbooksReducer from "./store/cookbooks/reducers";
+import rolesReducer from "./store/roles/reducers";
 
 const reducer = (history) => {
   return {
@@ -32,6 +33,7 @@ const reducer = (history) => {
     users: usersReducer,
     nodes: nodesReducer,
     cookbooks: cookbooksReducer,
+    roles: rolesReducer,
     profile: profileReducer,
   };
 };
