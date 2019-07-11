@@ -153,7 +153,7 @@ class CookbooksPage extends Component {
                 <Grid item xs>
                   <TextField
                     fullWidth
-                    placeholder="Search by email address or name"
+                    placeholder="Search by name or version"
                     InputProps={{
                       disableUnderline: true,
                       className: classes.searchInput,

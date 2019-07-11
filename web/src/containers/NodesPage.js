@@ -160,7 +160,7 @@ class NodesPage extends Component {
                 <Grid item xs>
                   <TextField
                     fullWidth
-                    placeholder="Search by email address or name"
+                    placeholder="Search by id, hostname, platform, or FQDN"
                     InputProps={{
                       disableUnderline: true,
                       className: classes.searchInput,
