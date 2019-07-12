@@ -7,17 +7,8 @@ import history from '../../routers/history';
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-export function getDefaultMiddleware(isProduction = IS_PRODUCTION) {
-  let middlewareArray = [thunk];
-
-  if (!isProduction) {
-    middlewareArray = [
-      thunk,
-      routerMiddleware(history)
-    ];
-  }
-
-  return middlewareArray;
+export function getDefaultMiddleware() {
+  return [routerMiddleware(history), thunk];
 }
 
 export default function configureStore(options = {}) {
