@@ -31,7 +31,8 @@
 *.pem
 *.generators
 
-
 # Other areas
 .idea/*
 .git/*
+
+build.bash

@@ -18,6 +18,7 @@ const styles = theme => ({
   },
   largeIcon: {
     transform: 'scale(5.0)',
+    color: theme.palette.common.light.blueGray
   }
 });
 

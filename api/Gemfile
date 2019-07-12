@@ -29,9 +29,14 @@ gem 'dry-validation'
 # Representable
 gem 'representable'
 
-# SRP
+
+# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
+
+# Use ROTP for generating OTP QR codes
 gem 'rotp'
+
+# SRP for password authentication
 gem 'sirp', github: 'rfizzle/sirp'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -46,9 +51,6 @@ gem 'sirp', github: 'rfizzle/sirp'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
-
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

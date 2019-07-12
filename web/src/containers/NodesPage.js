@@ -25,6 +25,7 @@ import moment from 'moment';
 import Chip from "@material-ui/core/Chip";
 import classNames from 'classnames';
 import { push } from 'connected-react-router';
+import AntTabs from "../components/ant_tabs";
 
 const styles = theme => ({
   contentPaper: {
@@ -68,6 +69,9 @@ const styles = theme => ({
   },
   errorText: {
     color: theme.palette.error.dark,
+  },
+  paperDivider: {
+    paddingTop: theme.spacing(4)
   }
 });
 
@@ -138,6 +142,14 @@ const buildRoleChips = (arr, classes, key) => {
   );
 };
 
+const buildNodePanel = (selectedNode, nodeData, classes) => {
+  return (
+    <AntTabs data={
+      [{ label: 'World', content: 'hello World' }, { label: 'Hell', content: 'hello hell' }]
+    }/>
+  );
+};
+
 class NodesPage extends Component {
   constructor(props) {
     super(props);
@@ -180,7 +192,7 @@ class NodesPage extends Component {
   };
 
   render() {
-    const { classes, nodes } = this.props;
+    const { classes, nodes, selectedNode, nodeData } = this.props;
     const { search } = this.state;
 
     const filteredNodes = NodeUtils.searchNodes(nodes, search);
@@ -222,6 +234,9 @@ class NodesPage extends Component {
           </AppBar>
           {nodesTable(filteredNodes, classes, this.handleRowClick)}
         </Paper>
+        <div className={classes.paperDivider}/>
+        <AntTabs/>
+        {buildNodePanel(selectedNode, nodeData, classes)}
       </MainLayoutComponent>
     );
   }
@@ -231,6 +246,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({ loadNodes, refreshNo
 
 const mapStateToProps = (state) => ({
   nodes: state.nodes.nodes,
+  selectedNode: state.nodes.selectedNode,
+  nodeData: state.nodes.nodeData
 });
 
 NodesPage.propTypes = {

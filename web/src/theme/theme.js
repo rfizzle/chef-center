@@ -24,6 +24,32 @@ export const theme = createMuiTheme({
       dark: '#d6d5d5',
       primary: '#2d3446',
     },
+    common: {
+      black: '#000000',
+      white: '#ffffff',
+      light: {
+        red: '#ffcdd2',
+        pink: '#f8bbd0',
+        purple: '#e1bee7',
+        deepPurple: '#d1c4e9',
+        indigo: '#c5cae9',
+        blue: '#bbdefb',
+        lightBlue: '#b3e5fc',
+        cyan: '#b2ebf2',
+        teal: '#b2dfdb',
+        green: '#c8e6c9',
+        lightGreen: '#dcedc8',
+        lime: '#f0f4c3',
+        yellow: '#fff9c4',
+        amber: '#ffecb3',
+        orange: '#ffe0b2',
+        deepOrange: '#ffccbc',
+        brown: '#d7ccc8',
+        grey: '#f5f5f5',
+        blueGray: '#cfd8dc',
+      },
+
+    }
   },
   shape: {
     borderRadius: 0,
