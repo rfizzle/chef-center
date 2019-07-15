@@ -5,4 +5,8 @@ class NodesController < AuthenticatedController
   def index
     run Node::Index
   end
+
+  def show
+    run Node::Show
+  end
 end

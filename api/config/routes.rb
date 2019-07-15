@@ -32,7 +32,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :nodes
+    resources :nodes, constraints: { id: /[^\/]+/ }
     resources :cookbooks
     resources :roles
   end

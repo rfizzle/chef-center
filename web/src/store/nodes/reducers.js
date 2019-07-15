@@ -1,4 +1,4 @@
-const defaultState = { nodes: [], isRefreshing: false };
+const defaultState = { nodes: [], nodeId: null, nodeData: null, isRefreshing: false };
 
 export default function nodesReducer(state = defaultState, action) {
   switch (action.type) {
@@ -17,6 +17,16 @@ export default function nodesReducer(state = defaultState, action) {
       return {
         ...state,
         isRefreshing: false,
+      };
+    case 'NODE_SELECTED':
+      return {
+        ...state,
+        nodeId: action.id,
+      };
+    case 'NODE_RETRIEVED':
+      return {
+        ...state,
+        nodeData: action.data,
       };
     default:
       return state;

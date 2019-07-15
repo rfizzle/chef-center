@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import PropTypes from "prop-types";
 
 const AntTabsParent = withStyles({
@@ -51,7 +50,7 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
   },
-  typography: {
+  content: {
     padding: theme.spacing(3),
   },
   demo1: {
@@ -87,17 +86,18 @@ class AntTabs extends Component {
     }
 
     const { value } = this.state;
+
     return (
       <div className={classes.root}>
         <div className={classes.demo1}>
           <AntTabsParent value={value} onChange={this.handleChange}>
             {data.map(ele => {
-              return (<AntTabItem label={ele.label} key={ele.id}/>)
+              return (<AntTabItem label={ele.label} key={'tab_parent_' + ele.label}/>)
             })}
           </AntTabsParent>
-          <Typography className={classes.typography}>
+          <div className={classes.content}>
             {data[value].content}
-          </Typography>
+          </div>
         </div>
       </div>
     );
@@ -106,10 +106,7 @@ class AntTabs extends Component {
 
 AntTabs.propTypes = {
   classes: PropTypes.object.isRequired,
-  data: PropTypes.exact({
-    label: PropTypes.string,
-    content: PropTypes.object
-  }),
+  data: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(AntTabs);

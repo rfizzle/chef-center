@@ -76,6 +76,10 @@ const styles = theme => ({
   divider: {
     marginTop: theme.spacing(2),
   },
+  title: {
+    display: 'block',
+    textAlign: 'center',
+  }
 });
 
 class SideNav extends Component {
@@ -87,7 +91,7 @@ class SideNav extends Component {
     return (
       <Drawer variant="permanent" {...other}>
         <List disablePadding>
-          <ListItem className={classNames(classes.firebase, classes.item, classes.itemCategory)}>
+          <ListItem className={classNames(classes.firebase, classes.item, classes.itemCategory, classes.title)}>
             Chef-Center
           </ListItem>
           {links.map(({ id, children }) => (

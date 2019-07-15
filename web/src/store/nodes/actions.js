@@ -27,6 +27,15 @@ export const refreshNodes = () => {
   };
 };
 
+export const getNode = (id) => {
+  return dispatch => {
+    Promise.resolve(dispatch(nodesRefreshing()))
+      .then(() => dispatch(nodeSelected(id)))
+      .then(() => NodesApi.get(id))
+      .then(node => dispatch(nodeRetrieved(node)))
+  }
+};
+
 function nodesLoaded(nodes) {
   return { type: types.NODES_LOADED, nodes };
 }
@@ -37,4 +46,12 @@ function nodesRefreshing() {
 
 function nodesRefreshed() {
   return { type: types.NODES_REFRESHED };
+}
+
+function nodeSelected(id) {
+  return { type: types.NODE_SELECTED, id }
+}
+
+function nodeRetrieved(data) {
+  return { type: types.NODE_RETRIEVED, data }
 }
