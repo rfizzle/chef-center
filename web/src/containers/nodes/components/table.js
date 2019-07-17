@@ -50,11 +50,24 @@ const styles = theme => ({
     paddingBottom: theme.spacing(1),
     paddingLeft: theme.spacing(4),
   },
+  tableBodyParent: {
+    overflow: 'auto',
+    maxHeight: theme.spacing(50),
+  },
+  tableBody: {
+    overflowY: 'scroll',
+  },
   marginChip: {
     marginRight: theme.spacing(1),
   },
   errorText: {
     color: theme.palette.error.dark,
+  },
+  muted: {
+    color: theme.palette.common.normal.grey
+  },
+  clickable: {
+    cursor: 'pointer'
   },
 });
 
@@ -152,39 +165,43 @@ class NodesTable extends Component {
       return (
         <div>
           {searchBar}
-          <Table className={classes.table}>
-            <TableHead className={classes.tableHead}>
-              <TableRow className={classes.tableRow}>
-                <TableCell>Hostname</TableCell>
-                <TableCell>Platform</TableCell>
-                <TableCell>FQDN</TableCell>
-                <TableCell>Uptime</TableCell>
-                <TableCell>Last Checkin</TableCell>
-                <TableCell>Roles</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredNodes.map(node => {
-                return (
-                  <TableRow
-                    key={node.id}
-                    selected={node.id === selectedNode}
-                  >
-                    <TableCell onClick={() => onRowClick(node.id)}>{node.hostname}</TableCell>
-                    <TableCell onClick={() => onRowClick(node.id)}>{node.platform}</TableCell>
-                    <TableCell onClick={() => onRowClick(node.id)}>{node.fqdn}</TableCell>
-                    <TableCell onClick={() => onRowClick(node.id)}>{moment.duration(node.uptime).humanize()}</TableCell>
-                    <TableCell
-                      onClick={() => onRowClick(node.id)}>{moment(node.last_checkin, 'X').fromNow()}</TableCell>
-                    <TableCell
-                      onClick={() => onRowClick(node.id)}>{this.buildRoleChips(node.roles, classes, node.id)}</TableCell>
-                    <TableCell></TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+          <div className={classes.tableBodyParent}>
+            <Table className={classes.table}>
+              <TableHead className={classes.tableHead}>
+                <TableRow className={classes.tableRow}>
+                  <TableCell>Hostname</TableCell>
+                  <TableCell>Platform</TableCell>
+                  <TableCell>FQDN</TableCell>
+                  <TableCell>Uptime</TableCell>
+                  <TableCell>Last Checkin</TableCell>
+                  <TableCell>Roles</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={classes.tableBody}>
+                {filteredNodes.map(node => {
+                  return (
+                    <TableRow
+                      className={classes.clickable}
+                      key={node.id}
+                      selected={node.id === selectedNode}
+                    >
+                      <TableCell onClick={() => onRowClick(node.id)}>{node.hostname}</TableCell>
+                      <TableCell onClick={() => onRowClick(node.id)}>{node.platform}</TableCell>
+                      <TableCell onClick={() => onRowClick(node.id)}>{node.fqdn}</TableCell>
+                      <TableCell
+                        onClick={() => onRowClick(node.id)}>{moment.duration(node.uptime).humanize()}</TableCell>
+                      <TableCell
+                        onClick={() => onRowClick(node.id)}>{moment(node.last_checkin, 'X').fromNow()}</TableCell>
+                      <TableCell
+                        onClick={() => onRowClick(node.id)}>{this.buildRoleChips(node.roles, classes, node.id)}</TableCell>
+                      <TableCell></TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       );
     } else {
@@ -210,6 +227,5 @@ NodesTable.propTypes = {
   onRowClick: PropTypes.func.isRequired,
   onRefresh: PropTypes.func.isRequired,
 };
-
 
 export default (withStyles(styles)(NodesTable));

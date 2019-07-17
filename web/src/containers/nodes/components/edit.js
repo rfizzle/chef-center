@@ -18,8 +18,9 @@ import DomainIcon from '@material-ui/icons/Domain';
 import IPIcon from '@material-ui/icons/SignalWifi4Bar';
 import MacIcon from '@material-ui/icons/Fingerprint';
 
-import AntTabs from "../../../components/ant_tabs";
-import SingleSelect from "../../../components/single_select";
+import AntTabs from '../../../components/ant_tabs';
+import SingleSelect from '../../../components/single_select';
+import RunListTable from '../../../components/run_list_table'
 
 const styles = theme => ({
   boxContent: {
@@ -167,6 +168,13 @@ class NodeEdit extends Component {
     </div>
   );
 
+  runListTab = (nodeData) => (
+    <div>
+      <RunListTable run_list={['corporate_laptop']} roles={['corporate_laptop']}
+                    recipes={['default', 'local', 'remote']}/>
+    </div>
+  );
+
   attributesTab = (nodeData) => (
     <div>
       Attributes
@@ -180,6 +188,7 @@ class NodeEdit extends Component {
       <AntTabs data={
         [
           { label: 'Details', content: this.detailsTab(nodeData) },
+          { label: 'Run List', content: this.runListTab(nodeData) },
           { label: 'Attributes', content: this.attributesTab(nodeData) },
         ]
       }/>

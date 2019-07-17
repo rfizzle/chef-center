@@ -30,7 +30,7 @@ const styles = theme => ({
   },
   mainContent: {
     flexGrow: 1,
-    padding: '48px 36px 0',
+    padding: '48px 36px 36px',
     backgroundColor: theme.palette.primary.background,
   },
   footerContent: {
