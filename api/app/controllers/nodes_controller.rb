@@ -9,4 +9,8 @@ class NodesController < AuthenticatedController
   def show
     run Node::Show
   end
+
+  def update
+    run Node::Update
+  end
 end

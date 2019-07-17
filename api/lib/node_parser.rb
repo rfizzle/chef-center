@@ -2,10 +2,13 @@ module NodeParser
   def self.parse(raw_node)
     return {
       id: raw_node['name'],
+      name: raw_node['name'],
+      chef_type: raw_node['chef_type'],
+      json_class: raw_node['json_class'],
+      chef_environment: raw_node['chef_environment'],
       hostname: raw_node['automatic']['hostname'],
       run_list: raw_node['run_list'],
       expanded_run_list: raw_node['automatic']['expanded_run_list'],
-      environment: raw_node['chef_environment'],
       fqdn: raw_node['automatic']['fqdn'],
       domain: raw_node['automatic']['domain'],
       uptime: raw_node['automatic']['uptime_seconds'],
@@ -26,6 +29,20 @@ module NodeParser
       ip_address: raw_node['automatic']['ipaddress'],
       ipv6_address: raw_node['automatic']['ip6address'],
       mac_address: raw_node['automatic']['macaddress'],
+    }
+  end
+
+  def self.parse_for_update(raw_node)
+    return {
+      name: raw_node['name'],
+      chef_type: raw_node['chef_type'],
+      json_class: raw_node['json_class'],
+      chef_environment: raw_node['chef_environment'],
+      run_list: raw_node['run_list'],
+      override: raw_node['override'],
+      normal: raw_node['normal'],
+      default: raw_node['default'],
+      automatic: raw_node['automatic'],
     }
   end
 end

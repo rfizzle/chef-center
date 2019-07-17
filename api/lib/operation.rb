@@ -42,7 +42,7 @@ class Operation
       ctx[:request] = input[:request]
       Success(input)
     else
-      Failure(ErrorService.bad_request_fail(op_contract.errors.to_h))
+      Failure(error: ErrorService.bad_request_fail(op_contract.errors.to_h))
     end
   end
 
@@ -53,7 +53,7 @@ class Operation
   def validate(input)
     result = ctx[:contract].new.call(input[:params])
     if result.errors.count.positive?
-      Failure(ErrorService.bad_request_fail(result.errors.to_h))
+      Failure(error: ErrorService.bad_request_fail(result.errors.to_h))
     else
       ctx[:params] = result.to_h
       Success(input.merge(params: result.to_h))

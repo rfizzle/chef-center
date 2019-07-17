@@ -5,4 +5,6 @@ class DashboardController < AuthenticatedController
   def index
     run Dashboard::Index
   end
+
+
 end

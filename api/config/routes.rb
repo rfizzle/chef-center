@@ -32,8 +32,16 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :environments, constraints: { id: /[^\/]+/ }
+
     resources :nodes, constraints: { id: /[^\/]+/ }
-    resources :cookbooks
-    resources :roles
+
+    resources :cookbooks, constraints: { id: /[^\/]+/ } do
+      collection do
+        get :recipes
+      end
+    end
+
+    resources :roles, constraints: { id: /[^\/]+/ }
   end
 end
