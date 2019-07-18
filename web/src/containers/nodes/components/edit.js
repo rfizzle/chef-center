@@ -135,7 +135,7 @@ class NodeEdit extends Component {
     </ListItem>
   );
 
-  detailsTab = (nodeData) => (
+  detailsTab = (nodeData, environments) => (
     <div>
       <Grid container spacing={4}>
         <Grid item xs={6} md={3}>
@@ -157,11 +157,11 @@ class NodeEdit extends Component {
         <Grid item xs={12} md={6}>
           <List>
             <SingleSelect
-              availableValues={['production', 'development']}
-              selectedValue="development"
+              availableValues={environments}
+              selectedValue={nodeData.chef_environment}
               label="Environment"
               placeholder="Select environment"
-              onChange={(selectedObj) => { console.log(selectedObj.value) }}
+              onChange={(env) => { this.props.onUpdate('environment', env.value) }}
             />
           </List>
         </Grid>
@@ -187,16 +187,18 @@ class NodeEdit extends Component {
   );
 
   render() {
-    const { nodeData, roles, recipes } = this.props;
+    const { nodeId, nodeData, roles, recipes, environments } = this.props;
 
     return (
       <AntTabs data={
         [
-          { label: 'Details', content: this.detailsTab(nodeData) },
+          { label: 'Details', content: this.detailsTab(nodeData, environments) },
           { label: 'Run List', content: this.runListTab(nodeData.run_list, roles, recipes) },
           { label: 'Attributes', content: this.attributesTab(nodeData) },
         ]
-      }/>
+      }
+               key={nodeId}
+      />
     );
   }
 }
@@ -204,9 +206,10 @@ class NodeEdit extends Component {
 NodeEdit.propTypes = {
   classes: PropTypes.object.isRequired,
   nodeId: PropTypes.string,
-  nodeData: PropTypes.object,
-  roles: PropTypes.array,
-  recipes: PropTypes.array,
+  nodeData: PropTypes.object.isRequired,
+  roles: PropTypes.array.isRequired,
+  recipes: PropTypes.array.isRequired,
+  environments: PropTypes.array.isRequired,
   onUpdate: PropTypes.func.isRequired
 };
 

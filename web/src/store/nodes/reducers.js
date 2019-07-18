@@ -23,7 +23,8 @@ export default function nodesReducer(state = defaultState, action) {
         ...state,
         nodeId: action.id,
       };
-    case 'NODE_RETRIEVED':
+    // TODO: Break this out into own store
+    case 'NODE_LOADED':
       return {
         ...state,
         nodeData: action.data,

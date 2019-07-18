@@ -52,7 +52,9 @@ class Node::Update < Transaction
   def save_node(input)
     raw_node = Rails.application.config.chef_client.put("/nodes/#{input[:params][:id]}", input[:node])
 
-    ctx[:model] = raw_node
+    node = NodeParser.parse(raw_node)
+
+    ctx[:model] = node
 
     Success(input)
   end

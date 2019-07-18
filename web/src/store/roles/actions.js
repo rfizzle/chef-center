@@ -27,18 +27,14 @@ export const refreshRoles = () => {
   };
 };
 
-function rolesLoaded(roles) {
+export function rolesLoaded(roles) {
   return { type: types.ROLES_LOADED, roles };
 }
 
-export function rolesLoadedNoRefresh(roles) {
-  return { type: types.ROLES_LOADED_NO_REFRESH, roles };
-}
-
-function rolesRefreshing() {
+export function rolesRefreshing() {
   return { type: types.ROLES_REFRESHING };
 }
 
-function rolesRefreshed() {
+export function rolesRefreshed() {
   return { type: types.ROLES_REFRESHED };
 }

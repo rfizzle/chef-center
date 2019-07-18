@@ -27,18 +27,18 @@ export const refreshCookbooks = () => {
   };
 };
 
-function cookbooksLoaded(cookbooks) {
+export function cookbooksLoaded(cookbooks) {
   return { type: types.COOKBOOKS_LOADED, cookbooks };
 }
 
-export function cookbookRecipesLoaded(recipes) {
-  return { type: types.COOKBOOK_RECIPES_LOADED, recipes };
+export function cookbookRecipesLoaded(data) {
+  return { type: types.COOKBOOK_RECIPES_LOADED, data };
 }
 
-function cookbooksRefreshing() {
+export function cookbooksRefreshing() {
   return { type: types.COOKBOOKS_REFRESHING };
 }
 
-function cookbooksRefreshed() {
+export function cookbooksRefreshed() {
   return { type: types.COOKBOOKS_REFRESHED };
 }

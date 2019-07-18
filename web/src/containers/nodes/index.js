@@ -43,11 +43,13 @@ class NodesPage extends Component {
   handleUpdate = (type, data) => {
     if (type === 'runlist') {
       this.props.updateNode(this.props.nodeId, { run_list: data })
+    } else if (type === 'environment') {
+      this.props.updateNode(this.props.nodeId, { chef_environment: data })
     }
   };
 
   render() {
-    const { classes, nodes, nodeId, nodeData, roles, recipes } = this.props;
+    const { classes, nodes, nodeId, nodeData, roles, recipes, environments } = this.props;
 
     return (
       <MainLayoutComponent
@@ -67,6 +69,7 @@ class NodesPage extends Component {
             onUpdate={this.handleUpdate}
             roles={roles}
             recipes={recipes}
+            environments={environments}
           />
         }
       </MainLayoutComponent>
@@ -82,6 +85,7 @@ const mapStateToProps = (state) => ({
   nodeData: state.nodes.nodeData,
   roles: state.roles.roles,
   recipes: state.cookbooks.recipes,
+  environments: state.environments.environments,
 });
 
 NodesPage.propTypes = {

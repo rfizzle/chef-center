@@ -3,10 +3,11 @@
 # Node show decorator
 class Node::ShowDecorator < ApplicationDecorator
   property :id
+  property :name
   property :hostname
   property :run_list
   property :expanded_run_list
-  property :environment
+  property :chef_environment
   property :fqdn
   property :domain
   property :uptime

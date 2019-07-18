@@ -11,7 +11,7 @@ export default function cookbooksReducer(state = defaultState, action) {
     case 'COOKBOOK_RECIPES_LOADED':
       return {
         ...state,
-        recipes: action.recipes['recipes'],
+        recipes: action.data.recipes,
       };
     case 'COOKBOOKS_REFRESHING':
       return {

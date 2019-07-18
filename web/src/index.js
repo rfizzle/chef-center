@@ -23,6 +23,7 @@ import nodesReducer from "./store/nodes/reducers";
 import dashboardReducer from "./store/dashboard/reducers";
 import cookbooksReducer from "./store/cookbooks/reducers";
 import rolesReducer from "./store/roles/reducers";
+import environmentsReducer from "./store/environments/reducers";
 
 const reducer = (history) => {
   return {
@@ -35,6 +36,7 @@ const reducer = (history) => {
     cookbooks: cookbooksReducer,
     roles: rolesReducer,
     profile: profileReducer,
+    environments: environmentsReducer,
   };
 };
 

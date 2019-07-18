@@ -13,11 +13,6 @@ export default function rolesReducer(state = defaultState, action) {
         ...state,
         isRefreshing: true,
       };
-    case 'ROLES_LOADED_NO_REFRESH':
-      return {
-        ...state,
-        roles: action.roles,
-      };
     case 'ROLES_REFRESHED':
       return {
         ...state,

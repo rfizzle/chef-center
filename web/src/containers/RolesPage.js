@@ -87,7 +87,7 @@ const rolesTable = (roles, classes) => {
               <TableRow key={role.name}>
                 <TableCell>{role.name}</TableCell>
                 <TableCell>{role.description}</TableCell>
-                <TableCell>{buildRunListChips(role.runList, classes, role.name)}</TableCell>
+                <TableCell>{buildRunListChips(role.run_list, classes, role.name)}</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             );
