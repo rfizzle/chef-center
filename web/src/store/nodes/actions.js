@@ -1,6 +1,10 @@
 import { enqueueSnackbar, loadedContent, loadingContent } from '../application/actions';
-import NodesApi from '../../api/NodesApi';
 import * as types from './types';
+import NodesApi from '../../api/NodesApi';
+import RolesApi from "../../api/RolesApi";
+import CookbooksApi from "../../api/CookbooksApi";
+import { rolesLoadedNoRefresh } from '../roles/actions'
+import { cookbookRecipesLoaded } from "../cookbooks/actions";
 
 export const loadNodes = () => {
   return dispatch => {
@@ -30,7 +34,20 @@ export const refreshNodes = () => {
 export const getNode = (id) => {
   return dispatch => {
     Promise.resolve(dispatch(nodesRefreshing()))
+      .then(() => RolesApi.index())
+      .then(roles => dispatch(rolesLoadedNoRefresh(roles)))
+      .then(() => CookbooksApi.recipes())
+      .then(recipes => dispatch(cookbookRecipesLoaded(recipes)))
       .then(() => dispatch(nodeSelected(id)))
+      .then(() => NodesApi.get(id))
+      .then(node => dispatch(nodeRetrieved(node)))
+  }
+};
+
+export const updateNode = (id, data) => {
+  return dispatch => {
+    Promise.resolve(dispatch(nodesRefreshing()))
+      .then(() => NodesApi.update(id, data))
       .then(() => NodesApi.get(id))
       .then(node => dispatch(nodeRetrieved(node)))
   }

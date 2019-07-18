@@ -6,7 +6,7 @@ class Node::UpdateContract < Dry::Validation::Contract
     required(:id).filled(:str?)
     required(:node).schema do
       optional(:chef_environment).filled(:str?)
-      optional(:run_list).each(:hash?)
+      optional(:run_list).each(:str?)
       optional(:override).value(:hash?)
       optional(:normal).value(:hash?)
       optional(:default).value(:hash?)

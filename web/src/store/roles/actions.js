@@ -31,6 +31,10 @@ function rolesLoaded(roles) {
   return { type: types.ROLES_LOADED, roles };
 }
 
+export function rolesLoadedNoRefresh(roles) {
+  return { type: types.ROLES_LOADED_NO_REFRESH, roles };
+}
+
 function rolesRefreshing() {
   return { type: types.ROLES_REFRESHING };
 }

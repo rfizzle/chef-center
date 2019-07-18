@@ -8,6 +8,11 @@ export default function cookbooksReducer(state = defaultState, action) {
         cookbooks: action.cookbooks,
         isRefreshing: false,
       };
+    case 'COOKBOOK_RECIPES_LOADED':
+      return {
+        ...state,
+        recipes: action.recipes['recipes'],
+      };
     case 'COOKBOOKS_REFRESHING':
       return {
         ...state,

@@ -55,6 +55,7 @@ class NodeEdit extends Component {
     super(props);
     this.checkInItem = this.checkInItem.bind(this);
     this.detailsTab = this.detailsTab.bind(this);
+    this.runListTab = this.runListTab.bind(this);
   }
 
   hostItem = (hostname) => (
@@ -168,10 +169,14 @@ class NodeEdit extends Component {
     </div>
   );
 
-  runListTab = (nodeData) => (
+  runListTab = (runList, roles, recipes) => (
     <div>
-      <RunListTable run_list={['corporate_laptop']} roles={['corporate_laptop']}
-                    recipes={['default', 'local', 'remote']}/>
+      <RunListTable
+        runList={runList}
+        roles={roles.map((r) => `role[${r.name}]`)}
+        recipes={recipes.map((r) => `recipe[${r}]`)}
+        onChange={this.props.onUpdate}
+      />
     </div>
   );
 
@@ -182,13 +187,13 @@ class NodeEdit extends Component {
   );
 
   render() {
-    const { nodeData } = this.props;
+    const { nodeData, roles, recipes } = this.props;
 
     return (
       <AntTabs data={
         [
           { label: 'Details', content: this.detailsTab(nodeData) },
-          { label: 'Run List', content: this.runListTab(nodeData) },
+          { label: 'Run List', content: this.runListTab(nodeData.run_list, roles, recipes) },
           { label: 'Attributes', content: this.attributesTab(nodeData) },
         ]
       }/>
@@ -200,6 +205,8 @@ NodeEdit.propTypes = {
   classes: PropTypes.object.isRequired,
   nodeId: PropTypes.string,
   nodeData: PropTypes.object,
+  roles: PropTypes.array,
+  recipes: PropTypes.array,
   onUpdate: PropTypes.func.isRequired
 };
 

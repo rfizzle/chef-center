@@ -31,6 +31,10 @@ function cookbooksLoaded(cookbooks) {
   return { type: types.COOKBOOKS_LOADED, cookbooks };
 }
 
+export function cookbookRecipesLoaded(recipes) {
+  return { type: types.COOKBOOK_RECIPES_LOADED, recipes };
+}
+
 function cookbooksRefreshing() {
   return { type: types.COOKBOOKS_REFRESHING };
 }

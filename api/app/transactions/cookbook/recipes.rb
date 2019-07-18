@@ -6,7 +6,7 @@ class Cookbook::Recipes < Transaction
 
   step :find_recipes
 
-  def find_recipes(_input)
+  def find_recipes(input)
     # Use the chef HTTP client to get a list of cookbook
     raw_recipes_list = Rails.application.config.chef_client.get("/cookbooks/_recipes")
 

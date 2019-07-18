@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import MainLayoutComponent from '../../components/layout/Main';
 import { connect } from 'react-redux';
-import { getNode, loadNodes, refreshNodes } from '../../store/nodes/actions';
+import { getNode, loadNodes, refreshNodes, updateNode } from '../../store/nodes/actions';
 import { bindActionCreators } from 'redux';
 import NodesTable from './components/table'
 import NodeEdit from './components/edit'
@@ -24,6 +24,7 @@ class NodesPage extends Component {
     super(props);
     this.handleRefresh = this.handleRefresh.bind(this);
     this.handleRowClick = this.handleRowClick.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
   }
 
   componentDidMount() {
@@ -39,12 +40,14 @@ class NodesPage extends Component {
     // this.props.push("/nodes/" + id);
   };
 
-  handleUpdate = () => {
-
+  handleUpdate = (type, data) => {
+    if (type === 'runlist') {
+      this.props.updateNode(this.props.nodeId, { run_list: data })
+    }
   };
 
   render() {
-    const { classes, nodes, nodeId, nodeData } = this.props;
+    const { classes, nodes, nodeId, nodeData, roles, recipes } = this.props;
 
     return (
       <MainLayoutComponent
@@ -61,8 +64,9 @@ class NodesPage extends Component {
           <NodeEdit
             nodeId={nodeId}
             nodeData={nodeData}
-            onUpdate={() => {
-            }}
+            onUpdate={this.handleUpdate}
+            roles={roles}
+            recipes={recipes}
           />
         }
       </MainLayoutComponent>
@@ -70,12 +74,14 @@ class NodesPage extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ loadNodes, refreshNodes, getNode }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ loadNodes, refreshNodes, getNode, updateNode }, dispatch);
 
 const mapStateToProps = (state) => ({
   nodes: state.nodes.nodes,
   nodeId: state.nodes.nodeId,
-  nodeData: state.nodes.nodeData
+  nodeData: state.nodes.nodeData,
+  roles: state.roles.roles,
+  recipes: state.cookbooks.recipes,
 });
 
 NodesPage.propTypes = {
@@ -83,6 +89,7 @@ NodesPage.propTypes = {
   nodes: PropTypes.array.isRequired,
   loadNodes: PropTypes.func.isRequired,
   refreshNodes: PropTypes.func.isRequired,
+  updateNode: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NodesPage));
