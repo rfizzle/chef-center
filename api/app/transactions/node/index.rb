@@ -16,9 +16,7 @@ class Node::Index < Transaction
     # Loop through the node and get the valuable data
     raw_nodes['rows'].each do |node|
       # Only add node
-      if node['chef_type'] == 'node'
-        nodes << NodeParser.parse(node)
-      end
+      nodes << NodeParser.parse(node) if node['chef_type'] == 'node'
     end
 
     # Set the node as the models

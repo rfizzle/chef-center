@@ -21,7 +21,7 @@ class AccessToken
     def generate(payload)
       exp = Time.now.to_i + 3600
       now = Time.now.to_i
-      hard_exp = Time.now.to_i + 86400
+      hard_exp = Time.now.to_i + 86_400
       JWT.encode(payload.merge(exp: exp, iss: ISSUER, aud: AUDIENCE, iat: now, nbf: now, hexp: hard_exp), hmac_secret, ALGORITHM)
     end
 

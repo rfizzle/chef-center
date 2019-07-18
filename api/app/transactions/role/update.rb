@@ -25,13 +25,9 @@ class Role::Update < Transaction
 
   # Support patch
   def update_role(input)
-    if input.dig(:params, :role, :description)
-      input[:role][:description] = input.dig(:params, :role, :description)
-    end
+    input[:role][:description] = input.dig(:params, :role, :description) if input.dig(:params, :role, :description)
 
-    if input.dig(:params, :role, :run_list)
-      input[:role][:run_list] = input.dig(:params, :role, :run_list)
-    end
+    input[:role][:run_list] = input.dig(:params, :role, :run_list) if input.dig(:params, :role, :run_list)
 
     if input.dig(:params, :role, :env_run_lists)
       input[:role][:env_run_lists] = input.dig(:params, :role, :env_run_lists)

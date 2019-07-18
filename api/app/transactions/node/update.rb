@@ -29,9 +29,7 @@ class Node::Update < Transaction
       input[:node][:chef_environment] = input.dig(:params, :node, :chef_environment)
     end
 
-    if input.dig(:params, :node, :run_list)
-      input[:node][:run_list] = input.dig(:params, :node, :run_list)
-    end
+    input[:node][:run_list] = input.dig(:params, :node, :run_list) if input.dig(:params, :node, :run_list)
 
     if input.dig(:params, :node, :override_attributes)
       input[:node][:override] = input.dig(:params, :node, :override_attributes)

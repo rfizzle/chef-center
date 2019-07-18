@@ -20,7 +20,7 @@ class Dashboard::Index < Transaction
       clients: 0,
       successful_runs: 0,
       failed_runs: 0,
-      started_runs: 0,
+      started_runs: 0
     }
     Success(ctx[:model])
   end
@@ -74,7 +74,7 @@ class Dashboard::Index < Transaction
       start_time = Date.parse(input.dig(:params, :start_time)).to_time.to_i
       end_time = Time.now.to_i
     else
-      start_time = Time.at(Time.now.to_i - 86400).to_i
+      start_time = Time.at(Time.now.to_i - 86_400).to_i
       end_time = Time.now.to_i
     end
 
@@ -83,16 +83,16 @@ class Dashboard::Index < Transaction
 
     if input.dig(:params, :all_time)
       puts '1'
-      raw_runs = Rails.application.config.chef_client.get("/reports/org/runs", headers)
+      raw_runs = Rails.application.config.chef_client.get('/reports/org/runs', headers)
     else
       puts '2'
       raw_runs = Rails.application.config.chef_client.get("/reports/org/runs?from=#{start_time}&until=#{end_time}", headers)
     end
 
-    runs = raw_runs["run_history"]
+    runs = raw_runs['run_history']
 
     # Corner case: If no runs have happened in the past 24 hours
-    return Success(ctx[:model]) if runs == nil
+    return Success(ctx[:model]) if runs.nil?
 
     ctx[:model][:successful_runs] = runs.count { |x| x['status'] == 'success' }
     ctx[:model][:failed_runs] = runs.count { |x| x['status'] == 'failure' }

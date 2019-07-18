@@ -12,7 +12,7 @@ class Report::Node < Transaction
     headers = { 'X-Ops-Reporting-Protocol-Version' => protocol_version }
 
     # Get start date and end date (default to 24 hour window)
-    start_date = input[:params][:start_date] || Time.at(Time.now.to_i - 86400).to_i
+    start_date = input[:params][:start_date] || Time.at(Time.now.to_i - 86_400).to_i
     end_date = input[:params][:end_date] || Time.now.to_i
 
     # Use the chef HTTP client to get a list of reports

@@ -3,7 +3,7 @@
 # Cookbook show operation
 class Cookbook::Show < Transaction
   CONTRACT = Cookbook::ShowContract
-  #DECORATOR = Cookbook::ShowDecorator
+  # DECORATOR = Cookbook::ShowDecorator
 
   step :find_cookbook
 
@@ -20,11 +20,11 @@ class Cookbook::Show < Transaction
     sorted_versions = cookbook_versions.sort_by { |v| Gem::Version.new(v) }
 
     # Support version parameter
-    if input[:params][:version]
-      version = (sorted_versions.include?(input[:params][:version]) ? input[:params][:version] : sorted_versions[-1])
-    else
-      version = sorted_versions[-1]
-    end
+    version = if input[:params][:version]
+                (sorted_versions.include?(input[:params][:version]) ? input[:params][:version] : sorted_versions[-1])
+              else
+                sorted_versions[-1]
+              end
 
     # Get the full cookbook data
     raw_cookbook = Rails.application.config.chef_client.get("/cookbooks/#{input[:params][:id]}/#{version}")
