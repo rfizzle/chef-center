@@ -48,7 +48,9 @@ export const updateRole = (id, data) => {
   return dispatch => {
     Promise.resolve(dispatch(rolesRefreshing()))
       .then(() => RolesApi.update(id, data))
-      .then(role => dispatch(rolesLoaded(role)))
+      .then(role => dispatch(roleLoaded(role)))
+      .then(() => RolesApi.index())
+      .then(roles => dispatch(rolesLoaded(roles)))
       .catch(error => {
         dispatch(rolesRefreshed());
         dispatch(enqueueSnackbar({ message: error.message, options: { variant: 'error' } }));

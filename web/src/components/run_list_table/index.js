@@ -92,7 +92,7 @@ class RunListTable extends Component {
   };
 
   removeFromRunList = (item) => {
-    const newRunList = _.uniq(_.filter(this.state.runList, (i) => { return !(_.isEqual(i, item)); }))
+    const newRunList = _.uniq(_.filter(this.state.runList, (i) => { return !(_.isEqual(i, item)); }));
     this.setState({
       runList: newRunList,
       roles: _.difference(this.props.roles, newRunList),

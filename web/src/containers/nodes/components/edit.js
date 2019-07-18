@@ -190,14 +190,15 @@ class NodeEdit extends Component {
     const { nodeId, nodeData, roles, recipes, environments } = this.props;
 
     return (
-      <AntTabs data={
-        [
-          { label: 'Details', content: this.detailsTab(nodeData, environments) },
-          { label: 'Run List', content: this.runListTab(nodeData.run_list, roles, recipes) },
-          { label: 'Attributes', content: this.attributesTab(nodeData) },
-        ]
-      }
-               key={nodeId}
+      <AntTabs
+        data={
+          [
+            { label: 'Details', content: this.detailsTab(nodeData, environments) },
+            { label: 'Run List', content: this.runListTab(nodeData.run_list, roles, recipes) },
+            { label: 'Attributes', content: this.attributesTab(nodeData) },
+          ]
+        }
+        key={nodeId}
       />
     );
   }

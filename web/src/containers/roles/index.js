@@ -6,12 +6,17 @@ import MainLayoutComponent from '../../components/layout/Main';
 import { connect } from 'react-redux';
 import { getRole, loadRoles, refreshRoles, updateRole } from '../../store/roles/actions';
 import { bindActionCreators } from 'redux';
-import RolesTable from './componenets/table'
+import RolesTable from './componenets/table';
+import RoleEdit from './componenets/edit';
+import { enqueueSnackbar } from "../../store/application/actions";
 
 const styles = theme => ({
   contentPaper: {
     margin: 'auto',
     overflow: 'hidden',
+  },
+  paperDivider: {
+    paddingTop: theme.spacing(4)
   },
   searchBar: {
     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
@@ -77,11 +82,15 @@ class RolesPage extends Component {
   handleUpdate = (type, data) => {
     if (type === 'runlist') {
       this.props.updateRole(this.props.roleId, { run_list: data })
+    } else if (type === 'description') {
+      this.props.updateRole(this.props.roleId, { description: data })
+    } else if (type === 'attributes') {
+      this.props.updateRole(this.props.roleId, data)
     }
   };
 
   render() {
-    const { classes, roles, roleId } = this.props;
+    const { classes, roles, roleId, roleData, recipes } = this.props;
 
     return (
       <MainLayoutComponent
@@ -97,12 +106,30 @@ class RolesPage extends Component {
             onRowClick={this.handleRowClick}
           />}
         </Paper>
+        <div className={classes.paperDivider}/>
+        {
+          roleData &&
+          <RoleEdit
+            roleId={roleId}
+            roleData={roleData}
+            onUpdate={this.handleUpdate}
+            roles={roles}
+            recipes={recipes}
+            onError={this.props.enqueueSnackbar}
+          />
+        }
       </MainLayoutComponent>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ loadRoles, refreshRoles, getRole, updateRole }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  loadRoles,
+  refreshRoles,
+  getRole,
+  updateRole,
+  enqueueSnackbar
+}, dispatch);
 
 const mapStateToProps = (state) => ({
   roles: state.roles.roles,
