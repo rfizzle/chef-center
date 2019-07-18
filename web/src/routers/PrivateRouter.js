@@ -5,7 +5,7 @@ import * as PropTypes from 'prop-types';
 import { deletePath, savePath } from '../store/authentication/actions';
 import AppErrorBoundary from '../components/error_boundry/app';
 import { bindActionCreators } from 'redux';
-import AuthenticationApi from "../api/AuthenticationApi";
+import AuthenticationApi from '../api/AuthenticationApi';
 
 class PrivateRoute extends Component {
 

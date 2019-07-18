@@ -6,11 +6,11 @@ class RolesApi {
   }
 
   static async get(id) {
-    return apiGet('/roles/' + id)
+    return apiGet('/roles/' + id);
   }
 
   static async update(id, data) {
-    return apiPut('/roles/' + id, { role: data })
+    return apiPut('/roles/' + id, { role: data });
   }
 }
 

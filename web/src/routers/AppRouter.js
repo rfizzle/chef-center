@@ -8,9 +8,9 @@ import RegisterPage from '../containers/RegisterPage';
 import RootPage from '../containers/RootPage';
 import UsersPage from '../containers/UsersPage';
 import ProfilePage from '../containers/ProfilePage';
-import NodesPage from "../containers/nodes";
-import CookbooksPage from "../containers/CookbooksPage";
-import RolesPage from "../containers/roles";
+import NodesPage from '../containers/nodes';
+import CookbooksPage from '../containers/CookbooksPage';
+import RolesPage from '../containers/roles';
 
 const AppRouter = () => (
   <HashRouter>

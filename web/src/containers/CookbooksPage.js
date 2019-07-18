@@ -20,7 +20,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import Typography from '@material-ui/core/Typography';
 import { bindActionCreators } from 'redux';
-import CookbookUtils from '../utils/CookbookUtils'
+import CookbookUtils from '../utils/CookbookUtils';
 
 const styles = theme => ({
   contentPaper: {
@@ -140,7 +140,7 @@ class CookbooksPage extends Component {
     return (
       <MainLayoutComponent
         pageTitle="Cookbooks"
-        subNavLinks={[{ label: "List", link: "/cookbooks/" }]}
+        subNavLinks={[{ label: 'List', link: '/cookbooks/' }]}
         subNavActions={[]}
       >
         <Paper className={classes.contentPaper}>

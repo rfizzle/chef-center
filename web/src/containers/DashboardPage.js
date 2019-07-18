@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import MainLayoutComponent from '../components/layout/Main';
-import Widget from '../components/widget'
-import Grid from "@material-ui/core/Grid";
+import Widget from '../components/widget';
+import Grid from '@material-ui/core/Grid';
 import ComputerIcon from '@material-ui/icons/Computer';
 import CookBookIcon from '@material-ui/icons/LibraryBooks';
 import RoleIcon from '@material-ui/icons/Security';
@@ -12,9 +12,9 @@ import SuccessIcon from '@material-ui/icons/CheckCircleOutline';
 import FailedIcon from '@material-ui/icons/HighlightOffOutlined';
 import RunningIcon from '@material-ui/icons/PlayCircleOutline';
 
-import { connect } from "react-redux";
-import { loadDashboard, refreshDashboard } from "../store/dashboard/actions";
-import { bindActionCreators } from "redux";
+import { connect } from 'react-redux';
+import { loadDashboard, refreshDashboard } from '../store/dashboard/actions';
+import { bindActionCreators } from 'redux';
 
 const styles = theme => ({
   fullHeightBody: {
@@ -43,7 +43,7 @@ class DashboardPage extends Component {
       <MainLayoutComponent
         pageTitle="Dashboard"
         subNavLinks={[
-          { label: "Home", link: "/dashboard" },
+          { label: 'Home', link: '/dashboard' },
         ]}
         subNavActions={[]}
       >

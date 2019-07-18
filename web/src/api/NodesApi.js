@@ -6,11 +6,11 @@ class NodesApi {
   }
 
   static async get(id) {
-    return apiGet('/nodes/' + id)
+    return apiGet('/nodes/' + id);
   }
 
   static async update(id, data) {
-    return apiPut('/nodes/' + id, { node: data })
+    return apiPut('/nodes/' + id, { node: data });
   }
 }
 

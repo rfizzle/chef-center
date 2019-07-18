@@ -6,7 +6,7 @@ class CookbooksApi {
   }
 
   static async recipes() {
-    return apiGet('/cookbooks/recipes')
+    return apiGet('/cookbooks/recipes');
   }
 }
 

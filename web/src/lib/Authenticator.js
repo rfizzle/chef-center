@@ -6,7 +6,7 @@ import scrypt from 'scrypt-async';
 import jsrp from 'jsrp';
 import randomBytes from 'randombytes';
 import AppCrypto from './AppCrypto';
-import AuthenticationApi from "../api/AuthenticationApi";
+import AuthenticationApi from '../api/AuthenticationApi';
 
 // Default scrypt parameters
 const SCRYPT_PARAMETERS = {

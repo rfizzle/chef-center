@@ -138,7 +138,7 @@ class UsersPage extends Component {
     return (
       <MainLayoutComponent
         pageTitle="Users"
-        subNavLinks={[{ label: "List", link: "/users/" }]}
+        subNavLinks={[{ label: 'List', link: '/users/' }]}
         subNavActions={[{ title: 'Add User', link: '/users/new' }]}
       >
         <Paper className={classes.contentPaper}>
