@@ -94,10 +94,6 @@ class Dashboard::Index < Transaction
     # Corner case: If no runs have happened in the past 24 hours
     return Success(ctx[:model]) if runs == nil
 
-    pp input[:params]
-    pp raw_runs
-    pp runs
-
     ctx[:model][:successful_runs] = runs.count { |x| x['status'] == 'success' }
     ctx[:model][:failed_runs] = runs.count { |x| x['status'] == 'failure' }
     ctx[:model][:started_runs] = runs.count { |x| x['status'] == 'started' }

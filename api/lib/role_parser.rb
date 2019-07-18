@@ -9,7 +9,7 @@ module RoleParser
       run_list: role['run_list'],
       default_attributes: role['default_attributes'],
       override_attributes: role['override_attributes'],
-      env_run_list: role['env_run_lists'],
+      env_run_lists: role['env_run_lists'],
     }
   end
 

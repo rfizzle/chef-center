@@ -121,13 +121,13 @@ class ApplicationController < ActionController::API
     end
   end
 
-  # Convert hashes to OpenStruct so the decorators can read them
+  # Applies HashDot to Hash so the decorators can read them
   #
   # @param obj [Object] the object to check
-  # @return [OpenStruct, Object] returns an OpenStruct if object is hash
+  # @return [Hash, Object] returns a HashDot hash if object is hash
   def handle_hash(obj)
     if obj.is_a? Hash
-      JSON.parse(obj.to_json, object_class: OpenStruct)
+      obj.to_dot
     else
       obj
     end
