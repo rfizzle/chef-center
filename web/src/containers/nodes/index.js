@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import MainLayoutComponent from '../../components/layout/Main';
 import { connect } from 'react-redux';
-import { getNode, loadNodes, refreshNodes, updateNode } from '../../store/nodes/actions';
+import { clearCurrentNode, getNode, loadNodes, refreshNodes, updateNode } from '../../store/nodes/actions';
 import { bindActionCreators } from 'redux';
 import NodesTable from './components/table'
 import NodeEdit from './components/edit'
@@ -37,7 +37,10 @@ class NodesPage extends Component {
   }
 
   handleRowClick = (id) => {
-    this.props.getNode(id);
+    if (id !== this.props.nodeId) {
+      this.props.clearCurrentNode();
+      this.props.getNode(id);
+    }
   };
 
   handleUpdate = (type, data) => {
@@ -77,6 +80,7 @@ class NodesPage extends Component {
             recipes={recipes}
             environments={environments}
             onError={this.props.enqueueSnackbar}
+            key={nodeId}
           />
         }
       </MainLayoutComponent>
@@ -89,7 +93,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   refreshNodes,
   getNode,
   updateNode,
-  enqueueSnackbar
+  enqueueSnackbar,
+  clearCurrentNode
 }, dispatch);
 
 const mapStateToProps = (state) => ({

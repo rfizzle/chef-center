@@ -29,6 +29,12 @@ export default function nodesReducer(state = defaultState, action) {
         ...state,
         nodeData: action.data,
       };
+    case 'NODE_CLEARED':
+      return {
+        ...state,
+        nodeId: null,
+        nodeData: null,
+      };
     default:
       return state;
   }

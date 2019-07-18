@@ -36,20 +36,20 @@ export const refreshNodes = () => {
 export const getNode = (id) => {
   return dispatch => {
     Promise.resolve(dispatch(nodesRefreshing()))
+      .then(() => dispatch(nodeSelected(id)))
       .then(() => RolesApi.index())
       .then(roles => dispatch(rolesLoaded(roles)))
       .then(() => CookbooksApi.recipes())
       .then(recipes => dispatch(cookbookRecipesLoaded(recipes)))
       .then(() => EnvironmentsApi.index())
       .then(environments => dispatch(environmentsLoaded(environments)))
-      .then(() => dispatch(nodeSelected(id)))
       .then(() => NodesApi.get(id))
       .then(node => dispatch(nodeLoaded(node)))
       .catch(error => {
         dispatch(nodesRefreshed());
         dispatch(enqueueSnackbar({ message: error.message, options: { variant: 'error' } }));
-      })
-  }
+      });
+  };
 };
 
 export const updateNode = (id, data) => {
@@ -60,8 +60,14 @@ export const updateNode = (id, data) => {
       .catch(error => {
         dispatch(nodesRefreshed());
         dispatch(enqueueSnackbar({ message: error.message, options: { variant: 'error' } }));
-      })
-  }
+      });
+  };
+};
+
+export const clearCurrentNode = () => {
+  return dispatch => {
+    Promise.resolve(dispatch(nodeCleared()))
+  };
 };
 
 function nodesLoaded(nodes) {
@@ -83,4 +89,8 @@ function nodeSelected(id) {
 // TODO: Break this out into own store
 function nodeLoaded(data) {
   return { type: types.NODE_LOADED, data }
+}
+
+function nodeCleared() {
+  return { type: types.NODE_CLEARED }
 }
