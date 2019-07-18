@@ -37,7 +37,6 @@ class NodesPage extends Component {
 
   handleRowClick = (id) => {
     this.props.getNode(id);
-    // this.props.push("/nodes/" + id);
   };
 
   handleUpdate = (type, data) => {
@@ -57,8 +56,12 @@ class NodesPage extends Component {
         subNavLinks={[{ label: "List", link: "/nodes/" }]}
         subNavActions={[]}>
         <Paper className={classes.contentPaper}>
-          <NodesTable nodes={nodes} selectedNode={nodeId} onRowClick={this.handleRowClick}
-                      onRefresh={this.handleRefresh}/>
+          <NodesTable
+            nodes={nodes}
+            selectedNode={nodeId}
+            onRowClick={this.handleRowClick}
+            onRefresh={this.handleRefresh}
+          />
         </Paper>
         <div className={classes.paperDivider}/>
         {

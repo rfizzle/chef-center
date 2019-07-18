@@ -34,8 +34,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.js",
-    "fix": "eslint src/**/*.js --fix"
+    "lint": "./node_modules/eslint/bin/eslint.js src/**/*.js",
+    "fix": "./node_modules/eslint/bin/eslint.js src/**/*.js --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "eslint": "^5.16.0",
+    "eslint-plugin-jest": "^22.10.0",
     "redux-devtools": "^3.5.0",
     "redux-devtools-extension": "^2.13.8"
   }

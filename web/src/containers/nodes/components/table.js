@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
-import classNames from "classnames";
+import classNames from 'classnames';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
@@ -19,6 +19,7 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import RefreshIcon from '@material-ui/icons/Refresh';
 import NodeUtils from "../../../utils/NodeUtils";
+import RemoveIcon from '@material-ui/icons/RemoveCircle'
 
 const styles = theme => ({
   searchBar: {
@@ -68,6 +69,9 @@ const styles = theme => ({
   },
   clickable: {
     cursor: 'pointer'
+  },
+  notClickable: {
+    cursor: 'auto',
   },
 });
 
@@ -175,7 +179,7 @@ class NodesTable extends Component {
                   <TableCell>Uptime</TableCell>
                   <TableCell>Last Checkin</TableCell>
                   <TableCell>Roles</TableCell>
-                  <TableCell>Actions</TableCell>
+                  <TableCell align="right">Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody className={classes.tableBody}>
@@ -195,7 +199,9 @@ class NodesTable extends Component {
                         onClick={() => onRowClick(node.id)}>{moment(node.last_checkin, 'X').fromNow()}</TableCell>
                       <TableCell
                         onClick={() => onRowClick(node.id)}>{this.buildRoleChips(node.roles, classes, node.id)}</TableCell>
-                      <TableCell></TableCell>
+                      <TableCell className={classes.notClickable} align="right">
+                        <RemoveIcon className={classNames(classes.errorText, classes.clickable)}/>
+                      </TableCell>
                     </TableRow>
                   );
                 })}

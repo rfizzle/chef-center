@@ -10,7 +10,7 @@ import UsersPage from '../containers/UsersPage';
 import ProfilePage from '../containers/ProfilePage';
 import NodesPage from "../containers/nodes";
 import CookbooksPage from "../containers/CookbooksPage";
-import RolesPage from "../containers/RolesPage";
+import RolesPage from "../containers/roles";
 
 const AppRouter = () => (
   <HashRouter>
