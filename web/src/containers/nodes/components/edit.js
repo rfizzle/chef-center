@@ -2,13 +2,16 @@ import React, { Component } from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
 import _ from 'lodash';
+import AceEditor from "react-ace";
 import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from '@material-ui/core/Avatar';
+import Button from "@material-ui/core/Button";
 import ListItemText from "@material-ui/core/ListItemText";
+import Typography from "@material-ui/core/Typography";
 import CheckIcon from '@material-ui/icons/CheckCircle';
 import WarningIcon from '@material-ui/icons/ReportProblem';
 import UptimeIcon from '@material-ui/icons/AccessTime';
@@ -21,6 +24,9 @@ import MacIcon from '@material-ui/icons/Fingerprint';
 import AntTabs from '../../../components/ant_tabs';
 import SingleSelect from '../../../components/single_select';
 import RunListTable from '../../../components/run_list_table'
+
+import 'brace/mode/json';
+import 'brace/theme/github';
 
 const styles = theme => ({
   boxContent: {
@@ -53,10 +59,33 @@ const styles = theme => ({
 class NodeEdit extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      normal_attributes: JSON.stringify(props.nodeData.normal_attributes, null, 2),
+      default_attributes: JSON.stringify(props.nodeData.default_attributes, null, 2),
+      override_attributes: JSON.stringify(props.nodeData.override_attributes, null, 2),
+    };
     this.checkInItem = this.checkInItem.bind(this);
     this.detailsTab = this.detailsTab.bind(this);
     this.runListTab = this.runListTab.bind(this);
+    this.handleNormalAttributeChange = this.handleNormalAttributeChange.bind(this);
+    this.handleAttributeSave = this.handleAttributeSave.bind(this);
   }
+
+  handleNormalAttributeChange = value => {
+    this.setState({
+      ...this.state,
+      normal_attributes: value,
+    })
+  };
+
+  handleAttributeSave = () => {
+    try {
+      const normalAttributes = JSON.parse(this.state.normal_attributes);
+      this.props.onUpdate('attributes', { normal_attributes: normalAttributes });
+    } catch {
+      this.props.onError({ message: 'Invalid JSON in attributes', options: { variant: 'error' } });
+    }
+  };
 
   hostItem = (hostname) => (
     <ListItem>
@@ -180,9 +209,87 @@ class NodeEdit extends Component {
     </div>
   );
 
-  attributesTab = (nodeData) => (
+  attributesTab = () => (
     <div>
-      Attributes
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={4}>
+          <Typography align="center">
+            Normal Attributes
+          </Typography>
+          <AceEditor
+            placeholder="Normal Attributes"
+            mode="json"
+            theme="github"
+            name="normal-attributes"
+            fontSize={14}
+            showPrintMargin={true}
+            showGutter={true}
+            highlightActiveLine={true}
+            value={this.state.normal_attributes}
+            onChange={this.handleNormalAttributeChange}
+            width="100%"
+            editorProps={{ "$blockScrolling": "Infinity" }}
+            setOptions={{
+              showLineNumbers: true,
+              tabSize: 2,
+            }}/>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Typography align="center">
+            Default Attributes
+          </Typography>
+          <AceEditor
+            placeholder="Default Attributes"
+            mode="json"
+            theme="github"
+            name="default-attributes"
+            fontSize={14}
+            showPrintMargin={true}
+            showGutter={true}
+            highlightActiveLine={true}
+            value={this.state.default_attributes}
+            readOnly
+            width="100%"
+            editorProps={{ "$blockScrolling": "Infinity" }}
+            setOptions={{
+              showLineNumbers: true,
+              tabSize: 2,
+            }}/>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Typography align="center">
+            Override Attributes
+          </Typography>
+          <AceEditor
+            placeholder="Override Attributes"
+            mode="json"
+            theme="github"
+            name="override-attributes"
+            fontSize={14}
+            showPrintMargin={true}
+            showGutter={true}
+            highlightActiveLine={true}
+            value={this.state.override_attributes}
+            readOnly
+            width="100%"
+            editorProps={{ "$blockScrolling": "Infinity" }}
+            setOptions={{
+              showLineNumbers: true,
+              tabSize: 2,
+            }}/>
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Button
+            fullWidth
+            variant="outlined"
+            color="primary"
+            className={this.props.classes.button}
+            onClick={this.handleAttributeSave}
+          >
+            Save
+          </Button>
+        </Grid>
+      </Grid>
     </div>
   );
 
@@ -195,7 +302,7 @@ class NodeEdit extends Component {
           [
             { label: 'Details', content: this.detailsTab(nodeData, environments) },
             { label: 'Run List', content: this.runListTab(nodeData.run_list, roles, recipes) },
-            { label: 'Attributes', content: this.attributesTab(nodeData) },
+            { label: 'Attributes', content: this.attributesTab() },
           ]
         }
         key={nodeId}
@@ -211,7 +318,8 @@ NodeEdit.propTypes = {
   roles: PropTypes.array.isRequired,
   recipes: PropTypes.array.isRequired,
   environments: PropTypes.array.isRequired,
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired,
 };
 
 export default (withStyles(styles)(NodeEdit));

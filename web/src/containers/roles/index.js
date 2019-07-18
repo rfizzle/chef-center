@@ -6,8 +6,8 @@ import MainLayoutComponent from '../../components/layout/Main';
 import { connect } from 'react-redux';
 import { getRole, loadRoles, refreshRoles, updateRole } from '../../store/roles/actions';
 import { bindActionCreators } from 'redux';
-import RolesTable from './componenets/table';
-import RoleEdit from './componenets/edit';
+import RolesTable from './components/table';
+import RoleEdit from './components/edit';
 import { enqueueSnackbar } from "../../store/application/actions";
 
 const styles = theme => ({

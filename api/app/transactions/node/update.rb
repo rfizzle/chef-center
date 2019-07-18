@@ -33,16 +33,16 @@ class Node::Update < Transaction
       input[:node][:run_list] = input.dig(:params, :node, :run_list)
     end
 
-    if input.dig(:params, :node, :override)
-      input[:node][:override] = input.dig(:params, :node, :override)
+    if input.dig(:params, :node, :override_attributes)
+      input[:node][:override] = input.dig(:params, :node, :override_attributes)
     end
 
-    if input.dig(:params, :node, :normal)
-      input[:node][:normal] = input.dig(:params, :node, :normal)
+    if input.dig(:params, :node, :normal_attributes)
+      input[:node][:normal] = input.dig(:params, :node, :normal_attributes)
     end
 
-    if input.dig(:params, :node, :default)
-      input[:node][:default] = input.dig(:params, :node, :default)
+    if input.dig(:params, :node, :default_attributes)
+      input[:node][:default] = input.dig(:params, :node, :default_attributes)
     end
 
     # Return success

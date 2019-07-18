@@ -3,9 +3,6 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 import AceEditor from 'react-ace';
 
-import 'brace/mode/json';
-import 'brace/theme/github';
-
 import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
@@ -20,6 +17,9 @@ import Button from "@material-ui/core/Button";
 
 import AntTabs from '../../../components/ant_tabs';
 import RunListTable from '../../../components/run_list_table'
+
+import 'brace/mode/json';
+import 'brace/theme/github';
 
 const styles = theme => ({
   boxContent: {
@@ -188,10 +188,8 @@ class RoleEdit extends Component {
             value={this.state.default_attributes}
             onChange={this.handleDefaultAttributeChange}
             width="100%"
+            editorProps={{ "$blockScrolling": "Infinity" }}
             setOptions={{
-              enableBasicAutocompletion: false,
-              enableLiveAutocompletion: false,
-              enableSnippets: false,
               showLineNumbers: true,
               tabSize: 2,
             }}/>
@@ -212,10 +210,8 @@ class RoleEdit extends Component {
             value={this.state.override_attributes}
             onChange={this.handleOverrideAttributeChange}
             width="100%"
+            editorProps={{ "$blockScrolling": "Infinity" }}
             setOptions={{
-              enableBasicAutocompletion: false,
-              enableLiveAutocompletion: false,
-              enableSnippets: false,
               showLineNumbers: true,
               tabSize: 2,
             }}/>

@@ -8,6 +8,7 @@ import { getNode, loadNodes, refreshNodes, updateNode } from '../../store/nodes/
 import { bindActionCreators } from 'redux';
 import NodesTable from './components/table'
 import NodeEdit from './components/edit'
+import { enqueueSnackbar } from "../../store/application/actions";
 
 const styles = theme => ({
   contentPaper: {
@@ -44,6 +45,8 @@ class NodesPage extends Component {
       this.props.updateNode(this.props.nodeId, { run_list: data })
     } else if (type === 'environment') {
       this.props.updateNode(this.props.nodeId, { chef_environment: data })
+    } else if (type === 'attributes') {
+      this.props.updateNode(this.props.nodeId, data)
     }
   };
 
@@ -73,6 +76,7 @@ class NodesPage extends Component {
             roles={roles}
             recipes={recipes}
             environments={environments}
+            onError={this.props.enqueueSnackbar}
           />
         }
       </MainLayoutComponent>
@@ -80,7 +84,13 @@ class NodesPage extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ loadNodes, refreshNodes, getNode, updateNode }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  loadNodes,
+  refreshNodes,
+  getNode,
+  updateNode,
+  enqueueSnackbar
+}, dispatch);
 
 const mapStateToProps = (state) => ({
   nodes: state.nodes.nodes,
