@@ -2,6 +2,7 @@
 
 # User token refresh transaction
 class Auth::RefreshToken < AuthTransaction
+  CONTRACT = Auth::RefreshTokenContract
   DECORATOR = Auth::RefreshDecorator
 
   step :get_jwt
@@ -9,7 +10,7 @@ class Auth::RefreshToken < AuthTransaction
   step :refresh_jwt
 
   def check_refresh_token(input)
-    refresh_token = input.dig(:request, :headers, 'X-JWT-REFRESH-TOKEN')
+    refresh_token = input.dig(:params, :refresh_token)
     if refresh_token && ctx[:user].refresh_token == refresh_token
       Success(input)
     else

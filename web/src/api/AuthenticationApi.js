@@ -26,7 +26,7 @@ class AuthenticationApi {
   }
 
   static async refresh_token() {
-    return apiPost('/authentication/refresh', {}, true);
+    return apiPost('/authentication/refresh', {refresh_token: localStorage.getItem('refresh_token')}, true);
   }
 
 }
