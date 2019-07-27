@@ -144,7 +144,10 @@ class Authenticator {
     const authResponse = await AuthenticationApi.authenticate({ email, M, ...(otp && { otp }) });
 
     // Get shared secret (H_AMK) and user's name from auth response
-    const { H_AMK, name, pbkdf2_salt, aes_iv, encrypted_private_key } = authResponse;
+    const { H_AMK, name, pbkdf2_salt, aes_iv, encrypted_private_key, refresh_token, csrf_token } = authResponse;
+
+    localStorage.setItem('refresh_token', refresh_token);
+    localStorage.setItem('csrf_token', csrf_token);
 
     // Return resolve promise if shared secret is correct
     if (this._srpCheckServer(H_AMK)) {
