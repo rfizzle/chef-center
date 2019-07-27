@@ -3,7 +3,7 @@
 # User model
 class User < ApplicationRecord
   validates :name, presence: true
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :salt, presence: true
   validates :kdf_salt, presence: true
   validates :verifier, presence: true
