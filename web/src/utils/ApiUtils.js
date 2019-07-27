@@ -1,7 +1,9 @@
 import axios from 'axios';
 import settings from '../settings';
 
-export const apiPost = (url, data = {}, failSilent = false, config = { withCredentials: true }) =>
+const defaultConfig = { withCredentials: true };
+
+export const apiPost = (url, data = {}, failSilent = false, config = defaultConfig) =>
   axios.post(`${settings.url}${url}`, data, config)
     .then(response => {
       if (response.status !== 200) {
@@ -16,7 +18,7 @@ export const apiPost = (url, data = {}, failSilent = false, config = { withCrede
     })
     .catch(error => Promise.reject(errorHandler(error)));
 
-export const apiGet = (url, failSilent = false, config = { withCredentials: true }) =>
+export const apiGet = (url, failSilent = false, config = defaultConfig) =>
   axios.get(`${settings.url}${url}`, config)
     .then(response => {
       if (response.status !== 200) {
@@ -31,7 +33,7 @@ export const apiGet = (url, failSilent = false, config = { withCredentials: true
     })
     .catch(error => Promise.reject(errorHandler(error)));
 
-export const apiPut = (url, data, failSilent = false, config = { withCredentials: true }) =>
+export const apiPut = (url, data, failSilent = false, config = defaultConfig) =>
   axios.put(`${settings.url}${url}`, data, config)
     .then(response => {
       if (response.status !== 200) {
@@ -46,7 +48,7 @@ export const apiPut = (url, data, failSilent = false, config = { withCredentials
     })
     .catch(error => Promise.reject(errorHandler(error)));
 
-export const apiDelete = (url, failSilent = false, config = { withCredentials: true }) =>
+export const apiDelete = (url, failSilent = false, config = defaultConfig) =>
   axios.delete(`${settings.url}${url}`, config)
     .then(response => {
       if (response.status !== 200) {
