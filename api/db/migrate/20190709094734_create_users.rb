@@ -17,6 +17,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :public_key
       t.string :encrypted_private_key
       t.text :proof
+      t.string :refresh_token
 
       t.timestamps
     end

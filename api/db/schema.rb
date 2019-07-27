@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20_190_709_094_734) do
     t.string 'public_key'
     t.string 'encrypted_private_key'
     t.text 'proof'
+    t.string 'refresh_token'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
   end
