@@ -5,7 +5,17 @@ class Auth::RefreshToken < AuthTransaction
   DECORATOR = Auth::RefreshDecorator
 
   step :get_jwt
+  step :check_refresh_token
   step :refresh_jwt
+
+  def check_refresh_token(input)
+    refresh_token = input.dig(:request, :headers, 'X-JWT-REFRESH-TOKEN')
+    if refresh_token && ctx[:user].refresh_token == refresh_token
+      Success(input)
+    else
+      Failure(ErrorService.bad_request_fail(message: 'Invalid refresh token'))
+    end
+  end
 
   def refresh_jwt(_input)
     jwt = AccessToken.decode(ctx[:jwt])
