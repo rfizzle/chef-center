@@ -50,6 +50,16 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
+axios.interceptors.request.use(config => {
+  const csrfToken = localStorage.getItem('csrf_token');
+
+  if ( csrfToken != null ) {
+    config.headers['X-CSRF-TOKEN'] = csrfToken;
+  }
+
+  return config;
+}, err => Promise.reject(err));
+
 axios.interceptors.response.use(
   response => response,
   error => {

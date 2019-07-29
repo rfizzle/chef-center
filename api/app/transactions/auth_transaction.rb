@@ -6,7 +6,7 @@ class AuthTransaction < Transaction
   #
   # @return [String, NilClass] returns a JWT string or nil.
   def get_jwt(input)
-    ctx[:jwt] = get_jwt_from_session(ctx[:session]) || get_jwt_from_header(ctx[:request]) || nil
+    ctx[:jwt] = get_jwt_from_session(ctx[:session], ctx[:request]) || get_jwt_from_header(ctx[:request]) || nil
     ctx[:jwt] ? Success(input) : Failure(ErrorService.unauthorized_error)
   end
 
@@ -31,11 +31,13 @@ class AuthTransaction < Transaction
   # Get the JWT from the session
   #
   # @param session [ActionDispatch::Session::CookieStore] the request session
+  # @param request [Net::HTTP] the request
   # @return [String, NilClass] the JWT or nil
-  def get_jwt_from_session(session)
+  def get_jwt_from_session(session, request)
     return nil if session.nil?
     return nil if session[:jwt].nil?
 
+    (raise ArgumentError, 'Missing CSRF Token') if session[:csrf_token] != request.headers['X-CSRF-TOKEN']
     session[:jwt]
   end
 

@@ -12,7 +12,8 @@ class Auth::Authenticate < AuthTransaction
   step :check_mfa
   step :verify_otp
   step :setup_user_session
-  step :setup_user_refresh_key
+  step :setup_user_csrf_token
+  step :setup_user_refresh_token
   step :authenticate_response
 
   def get_proof(input)
@@ -46,20 +47,27 @@ class Auth::Authenticate < AuthTransaction
     ctx[:session][:jwt] ? Success(input) : Failure(ErrorService.bad_request_fail(message: 'Error setting up JWT'))
   end
 
-  def setup_user_refresh_key(input)
+  def setup_user_csrf_token(input)
+    ctx[:session][:csrf_token] = SecureRandom.hex(16)
+    Success(input)
+  end
+
+  def setup_user_refresh_token(input)
     ctx[:user].refresh_token = SecureRandom.hex(32)
     ctx[:user].save ? Success(input) : Failure(ErrorService.bad_request_fail(message: 'Error generating refresh key'))
   end
 
   def authenticate_response(input)
     ctx[:model] = {
+      jwt: ctx[:session][:jwt],
       H_AMK: ctx[:h_amk],
       name: ctx[:user].name,
       aes_iv: ctx[:user].aes_iv,
       pbkdf2_salt: ctx[:user].pbkdf2_salt,
       public_key: ctx[:user].public_key,
       encrypted_private_key: ctx[:user].encrypted_private_key,
-      refresh_key: ctx[:user].refresh_key,
+      refresh_token: ctx[:user].refresh_token,
+      csrf_token: ctx[:session][:csrf_token]
     }
     Success(input)
   end

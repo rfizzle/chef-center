@@ -8,7 +8,7 @@ class Auth::CheckAuthentication < AuthTransaction
   step :get_user_from_jwt
   step :return_user
 
-  def get_user_from_jwt(*)
+  def get_user_from_jwt(_input)
     begin
       decoded_jwt = AccessToken.decode(ctx[:jwt])
       ctx[:model] = User.find(decoded_jwt[:sub])
