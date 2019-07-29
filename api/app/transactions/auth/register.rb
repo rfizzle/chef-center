@@ -4,9 +4,32 @@
 class Auth::Register < Transaction
   CONTRACT = Auth::RegisterContract
 
+  step :check_token
+  step :check_token_email_match
   step :check_existing
   step :check_mfa
   step :setup_user
+
+  # Ensures valid registration token
+  #
+  # @param input [Hash] the input value.
+  # @return [Success,Failure] fail if token does not exist.
+  def check_token(input)
+    ctx[:registration_token] = RegistrationToken.find_by(token: input[:params][:token])
+    ctx[:registration_token] ? Success(input) : Failure(ErrorService.bad_request_fail(message: 'Invalid registration token'))
+  end
+
+  # Ensures token matches provided email address.
+  #
+  # @param input [Hash] the input value.
+  # @return [Success,Failure] fail if invalid token for user.
+  def check_token_email_match(input)
+    if ctx[:registration_token].email == input[:params][:email]
+      Success(input)
+    else
+      Failure(ErrorService.bad_request_fail(message: 'Invalid registration token for email'))
+    end
+  end
 
   # Ensures uniqueness for email address.
   #

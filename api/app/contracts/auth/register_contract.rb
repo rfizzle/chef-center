@@ -3,6 +3,7 @@
 # User registration contract
 class Auth::RegisterContract < Dry::Validation::Contract
   params do
+    required(:registration_token).filled(:str?)
     required(:email).filled(:str?)
     required(:name).filled(:str?)
     required(:kdf_salt).filled(:str?)

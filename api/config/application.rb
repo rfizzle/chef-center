@@ -47,5 +47,13 @@ module ChefCenter
 
     # Custom settings
     config.sirp_prime = 4096
+
+    config.before_initialize do
+      # Raise unless environment variables exist
+      raise ArgumentError, 'Missing "ADMIN_EMAIL" environment variable' unless ENV['ADMIN_EMAIL']
+      raise ArgumentError, 'Missing "CHEF_SERVER_URL" environment variable' unless ENV['CHEF_SERVER_URL']
+      raise ArgumentError, 'Missing "CHEF_CLIENT_KEY" environment variable' unless ENV['CHEF_CLIENT_KEY']
+      raise ArgumentError, 'Missing "CHEF_CLIENT_NAME" environment variable' unless ENV['CHEF_CLIENT_NAME']
+    end
   end
 end
