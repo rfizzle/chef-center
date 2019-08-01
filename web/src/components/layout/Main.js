@@ -27,6 +27,10 @@ const styles = theme => ({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
+    [theme.breakpoints.up('sm')]: {
+      maxWidth: 'calc(100% - 256px) !important'
+    },
+    maxWidth: '100%'
   },
   mainContent: {
     flexGrow: 1,
