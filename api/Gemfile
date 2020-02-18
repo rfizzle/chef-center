@@ -12,7 +12,7 @@ gem 'rails', '~> 6.0.0.rc1'
 gem 'sqlite3', '~> 1.4'
 
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 
 # Use Chef-Client 14.13
 gem 'chef', '~> 14.13'
