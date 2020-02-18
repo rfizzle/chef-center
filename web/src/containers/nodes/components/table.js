@@ -20,6 +20,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import RefreshIcon from '@material-ui/icons/Refresh';
 import NodeUtils from "../../../utils/NodeUtils";
 import RemoveIcon from '@material-ui/icons/RemoveCircle'
+import Hidden from "@material-ui/core/Hidden";
 
 const styles = theme => ({
   searchBar: {
@@ -57,6 +58,7 @@ const styles = theme => ({
   },
   tableBody: {
     overflowY: 'scroll',
+    maxWidth: '100%'
   },
   marginChip: {
     marginRight: theme.spacing(1),
@@ -178,8 +180,10 @@ class NodesTable extends Component {
                   <TableCell>FQDN</TableCell>
                   <TableCell>Uptime</TableCell>
                   <TableCell>Last Checkin</TableCell>
-                  <TableCell>Roles</TableCell>
-                  <TableCell align="right">Actions</TableCell>
+                  <Hidden mdDown>
+                    <TableCell>Roles</TableCell>
+                    <TableCell align="right">Actions</TableCell>
+                  </Hidden>
                 </TableRow>
               </TableHead>
               <TableBody className={classes.tableBody}>
@@ -197,11 +201,13 @@ class NodesTable extends Component {
                         onClick={() => onRowClick(node.id)}>{moment.duration(node.uptime).humanize()}</TableCell>
                       <TableCell
                         onClick={() => onRowClick(node.id)}>{moment(node.last_checkin, 'X').fromNow()}</TableCell>
-                      <TableCell
-                        onClick={() => onRowClick(node.id)}>{this.buildRoleChips(node.roles, classes, node.id)}</TableCell>
-                      <TableCell className={classes.notClickable} align="right">
-                        <RemoveIcon className={classNames(classes.errorText, classes.clickable)}/>
-                      </TableCell>
+                      <Hidden mdDown>
+                        <TableCell
+                          onClick={() => onRowClick(node.id)}>{this.buildRoleChips(node.roles, classes, node.id)}</TableCell>
+                        <TableCell className={classes.notClickable} align="right">
+                          <RemoveIcon className={classNames(classes.errorText, classes.clickable)}/>
+                        </TableCell>
+                      </Hidden>
                     </TableRow>
                   );
                 })}

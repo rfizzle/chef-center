@@ -83,6 +83,11 @@ export const theme = createMuiTheme({
         }
       },
     },
+    MuiTableCell: {
+      root: {
+        padding: '7px 20px 7px 8px'
+      }
+    },
     MuiDrawer: {
       paper: {
         backgroundColor: '#18202c',
