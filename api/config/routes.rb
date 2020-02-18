@@ -43,5 +43,7 @@ Rails.application.routes.draw do
     end
 
     resources :roles, constraints: { id: %r{[^/]+} }
+
+    resources :clients, constraints: { id: %r{[^/]+} }
   end
 end
