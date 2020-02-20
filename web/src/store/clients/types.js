@@ -1,0 +1,6 @@
+export const CLIENTS_LOADED = 'CLIENTS_LOADED';
+export const CLIENTS_REFRESHING = 'CLIENTS_REFRESHING';
+export const CLIENTS_REFRESHED = 'CLIENTS_REFRESHED';
+// TODO: Break this out into own store
+export const CLIENT_SELECTED = 'CLIENT_SELECTED';
+export const CLIENT_LOADED = 'CLIENT_LOADED';
