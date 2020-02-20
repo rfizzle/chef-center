@@ -15,7 +15,7 @@ gem 'sqlite3', '~> 1.4'
 gem 'puma', '~> 3.11'
 
 # Use Chef-Client 14.13
-gem 'chef', '~> 14.13'
+gem 'chef', '14.13.11'
 
 # Use JWT
 gem 'jwt', '~> 2.1'
