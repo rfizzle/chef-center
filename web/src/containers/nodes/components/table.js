@@ -198,7 +198,7 @@ class NodesTable extends Component {
                       <TableCell onClick={() => onRowClick(node.id)}>{node.platform}</TableCell>
                       <TableCell onClick={() => onRowClick(node.id)}>{node.fqdn}</TableCell>
                       <TableCell
-                        onClick={() => onRowClick(node.id)}>{moment.duration(node.uptime).humanize()}</TableCell>
+                        onClick={() => onRowClick(node.id)}>{moment.duration(node.uptime, 'seconds').humanize()}</TableCell>
                       <TableCell
                         onClick={() => onRowClick(node.id)}>{moment(node.last_checkin, 'X').fromNow()}</TableCell>
                       <Hidden mdDown>

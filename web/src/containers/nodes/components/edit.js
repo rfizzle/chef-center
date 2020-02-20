@@ -133,7 +133,7 @@ class NodeEdit extends Component {
           <UptimeIcon/>
         </Avatar>
       </ListItemAvatar>
-      <ListItemText primary="Uptime" secondary={moment.duration(uptime).humanize()}/>
+      <ListItemText primary="Uptime" secondary={moment.duration(uptime, 'seconds').humanize()}/>
     </ListItem>
   );
 
